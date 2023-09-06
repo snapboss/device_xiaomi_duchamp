@@ -23,4 +23,6 @@ allow vendor_hal_displayfeature_default sysfs_leds:file w_file_perms;
 allow vendor_hal_displayfeature_default sysfs_therm:file w_file_perms;
 allow vendor_hal_displayfeature_default vendor_displayfeature_sysfs:file w_file_perms;
 
+allow vendor_hal_displayfeature_default mtk_hal_pq_service:service_manager find;
+
 set_prop(vendor_hal_displayfeature_default, vendor_displayfeature_prop)
