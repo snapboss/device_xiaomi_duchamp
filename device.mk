@@ -131,7 +131,8 @@ PRODUCT_PACKAGES += \
 # Fingerprint
 $(call soong_config_set,xiaomi_hardware_biometrics,use_new_impl,true)
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint-service.xiaomi
+    android.hardware.biometrics.fingerprint-service.xiaomi \
+    libudfpshandler
 
 # Health
 PRODUCT_PACKAGES += \
