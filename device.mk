@@ -165,6 +165,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.light-service.lineage
 
+# Lineage Health
+PRODUCT_PACKAGES += \
+    vendor.lineage.health-service.default
+
 # NFC
 PRODUCT_PACKAGES += \
     android.hardware.nfc-service.nxp \
