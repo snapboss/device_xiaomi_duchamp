@@ -34,13 +34,18 @@ import android.view.Display.HdrCapabilities;
 
 import vendor.xiaomi.hw.touchfeature.ITouchFeature;
 
+import org.lineageos.settings.display.ColorModeService;
+import org.lineageos.settings.doze.PocketService;
+import org.lineageos.settings.thermal.ThermalUtils;
+import org.lineageos.settings.thermal.ThermalTileService;
+import org.lineageos.settings.refreshrate.RefreshUtils;
 import org.lineageos.settings.touchsampling.TouchSamplingUtils;
 import org.lineageos.settings.touchsampling.TouchSamplingService;
+import org.lineageos.settings.touchsampling.TouchSamplingTileService;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
-    private static final boolean DEBUG = true;
     private static final String TAG = "XiaomiParts";
-
+    private static final boolean DEBUG = true;
     private static final int DOUBLE_TAP_TO_WAKE_MODE = 14;
     private ITouchFeature xiaomiTouchFeatureAidl;
 
@@ -83,6 +88,22 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
     private void startServices(Context context) {
         if (DEBUG) Log.i(TAG, "Starting services...");
+
+        // Start Color Mode Service
+        context.startServiceAsUser(new Intent(context, ColorModeService.class), UserHandle.CURRENT);
+
+        // Start Thermal Management Services
+        ThermalUtils.getInstance(context).startService();
+        context.startServiceAsUser(new Intent(context, ThermalTileService.class), UserHandle.CURRENT);
+
+        // Start Refresh Rate Service
+        RefreshUtils.startService(context);
+
+        // Start Pocket Mode Service
+        PocketService.startService(context);
+
+        // Start Touch Sampling Tile Service
+        context.startServiceAsUser(new Intent(context, TouchSamplingTileService.class), UserHandle.CURRENT);
 
         // Start Touch Sampling Service
         context.startServiceAsUser(new Intent(context, TouchSamplingService.class), UserHandle.CURRENT);
@@ -147,4 +168,5 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         }
     }
 }
+
 
