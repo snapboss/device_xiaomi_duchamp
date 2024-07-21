@@ -184,7 +184,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
    LineageApertureOverlayDuchamp \
-   LineageDialerDuchamp
+   LineageDialerDuchamp \
+   LineageSettingsOverlayDuchamp
 
 # Parts
 PRODUCT_PACKAGES += \
