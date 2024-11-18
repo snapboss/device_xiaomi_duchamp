@@ -42,7 +42,7 @@ class FingerprintEngine {
     ndk::ScopedAStatus onPointerUpImpl(int32_t pointerId);
     ndk::ScopedAStatus onUiReadyImpl();
 
-    SensorLocation getSensorLocation();
+    std::vector<SensorLocation> getSensorLocations();
 
     static std::pair<AcquiredInfo, int32_t> convertAcquiredInfo(int32_t code);
     static std::pair<Error, int32_t> convertError(int32_t code);

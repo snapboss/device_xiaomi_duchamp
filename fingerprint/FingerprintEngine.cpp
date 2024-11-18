@@ -9,6 +9,7 @@
 
 #include <android-base/logging.h>
 #include <android-base/parseint.h>
+#include <android-base/strings.h>
 
 #include <fingerprint.sysprop.h>
 
@@ -258,31 +259,38 @@ ndk::ScopedAStatus FingerprintEngine::onUiReadyImpl() {
     return ndk::ScopedAStatus::ok();
 }
 
-SensorLocation FingerprintEngine::getSensorLocation() {
-    SensorLocation location;
+std::vector<SensorLocation> FingerprintEngine::getSensorLocations() {
+    std::vector<SensorLocation> locations;
 
     auto loc = Fingerprint::cfg().get<std::string>("sensor_location");
-    auto isValidStr = false;
-    auto dim = Util::split(loc, "|");
+    auto entries = ::android::base::Split(loc, ",");
 
-    if (dim.size() != 3 and dim.size() != 4) {
-        if (!loc.empty()) {
-            LOG(WARNING) << "Invalid sensor location input (x|y|radius): " + loc;
+    for (const auto& entry : entries) {
+        auto isValidStr = false;
+        auto dim = ::android::base::Split(entry, "|");
+
+        if (dim.size() != 3 and dim.size() != 4) {
+            if (!loc.empty()) {
+                LOG(INFO) << "Invalid sensor location input (x|y|radius) or (x|y|radius|display): "
+                          << loc.c_str();
+            }
+        } else {
+            int32_t x, y, r;
+            std::string d;
+            isValidStr = ParseInt(dim[0], &x) && ParseInt(dim[1], &y) && ParseInt(dim[2], &r);
+            if (dim.size() == 4) {
+                d = dim[3];
+                isValidStr = isValidStr && !d.empty();
+            }
+            if (isValidStr)
+                locations.push_back({.sensorLocationX = x,
+                                     .sensorLocationY = y,
+                                     .sensorRadius = r,
+                                     .display = d});
         }
-    } else {
-        int32_t x, y, r;
-        std::string d;
-        isValidStr = ParseInt(dim[0], &x) && ParseInt(dim[1], &y) && ParseInt(dim[2], &r);
-        if (dim.size() == 4) {
-            d = dim[3];
-            isValidStr = isValidStr && !d.empty();
-        }
-        if (isValidStr)
-            location = {
-                    .sensorLocationX = x, .sensorLocationY = y, .sensorRadius = r, .display = d};
     }
 
-    return location;
+    return locations;
 }
 
 std::pair<AcquiredInfo, int32_t> FingerprintEngine::convertAcquiredInfo(int32_t code) {

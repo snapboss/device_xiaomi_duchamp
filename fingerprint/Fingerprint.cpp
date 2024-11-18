@@ -80,19 +80,19 @@ ndk::ScopedAStatus Fingerprint::getSensorProps(std::vector<SensorProps>* out) {
     common::CommonProps commonProps = {sensorId, (common::SensorStrength)sensorStrength,
                                        MAX_ENROLLMENTS_PER_USER, componentInfo};
 
-    SensorLocation sensorLocation = mEngine->getSensorLocation();
+    std::vector<SensorLocation> sensorLocations = mEngine->getSensorLocations();
+
+    std::vector<std::string> sensorLocationStrings;
+    std::transform(sensorLocations.begin(), sensorLocations.end(),
+                   std::back_inserter(sensorLocationStrings),
+                   [](const SensorLocation& obj) { return obj.toString(); });
 
     LOG(INFO) << "sensor type:" << ::android::internal::ToString(mSensorType)
-              << " location:" << sensorLocation.toString();
+              << " location:" << ::android::base::Join(sensorLocationStrings, ", ").c_str();
 
-    *out = {{commonProps,
-             mSensorType,
-             {sensorLocation},
-             navigationGuesture,
-             detectInteraction,
-             displayTouch,
-             controlIllumination,
-             std::nullopt}};
+    *out = {{commonProps, mSensorType, sensorLocations, navigationGuesture, detectInteraction,
+             displayTouch, controlIllumination, std::nullopt}};
+
     return ndk::ScopedAStatus::ok();
 }
 
