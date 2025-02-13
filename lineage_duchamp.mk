@@ -11,13 +11,19 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Inherit from device makefile.
 $(call inherit-product, device/xiaomi/duchamp/device.mk)
 
-# Inherit some common DerpfestOS stuff.
-$(call inherit-product, vendor/derp/config/common_full_phone.mk)
+# Inherit some common VoltageOS stuff.
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
-# Derpfest
-EXTRA_UDFPS_ICONS := true
+# To include Gapps 
+WITH_GMS := true
+MATRIXX_BUILD_TYPE := Unofficial
+# Inherit some common device props
+TARGET_FACE_UNLOCK_SUPPORTED := true
+SYSTEM_OPTIMIZE_JAVA := true
+SYSTEMUI_OPTIMIZE_JAVA := true
+TARGET_HAS_UDFPS := true
 
-PRODUCT_NAME := derp_duchamp
+PRODUCT_NAME := lineage_duchamp
 PRODUCT_DEVICE := duchamp
 PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_BRAND := POCO
