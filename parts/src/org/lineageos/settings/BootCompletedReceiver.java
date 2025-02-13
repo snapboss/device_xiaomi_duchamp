@@ -64,7 +64,8 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
         // Call LineageOS functionalities
         DozeUtils.onBootCompleted(context);
-        ThermalUtils.startService(context);
+        // Start Thermal Management Services
+        ThermalUtils.getInstance(context).startService();
         RefreshUtils.startService(context);
         TouchSamplingUtils.restoreSamplingValue(context);
         } catch (Exception e) {
