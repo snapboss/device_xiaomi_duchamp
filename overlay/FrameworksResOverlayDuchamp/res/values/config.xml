@@ -692,10 +692,8 @@
     
         <!-- Expected value from fast charging status file  -->
     <string name="config_oemFastChargerStatusValue" translatable="false">1</string>
-    
-        <!-- If true, the doze component is not started until after the screen has been
-         turned off and the screen off animation has been performed. -->
-    <bool name="config_dozeAfterScreenOffByDefault">true</bool>
+
+
 
 
 </resources>
