@@ -106,6 +106,15 @@ blob_fixups: blob_fixups_user_type = {
      'vendor/lib64/mt6897/libpqconfig.so': blob_fixup()
          .replace_needed('android.hardware.sensors-V2-ndk.so', 'android.hardware.sensors-V3-ndk.so'),
 
+    'vendor/lib64/mt6897/libneuralnetworks_sl_driver_mtk_prebuilt.so': blob_fixup()
+        .clear_symbol_version('AHardwareBuffer_allocate')
+        .clear_symbol_version('AHardwareBuffer_createFromHandle')
+        .clear_symbol_version('AHardwareBuffer_describe')
+        .clear_symbol_version('AHardwareBuffer_getNativeHandle')
+        .clear_symbol_version('AHardwareBuffer_lock')
+        .clear_symbol_version('AHardwareBuffer_release')
+        .clear_symbol_version('AHardwareBuffer_unlock'),
+
      ('system_ext/lib64/libcamera_algoup_jni.xiaomi.so',
       'system_ext/lib64/libcamera_mianode_jni.xiaomi.so',
       'system_ext/lib64/libcamera_ispinterface_jni.xiaomi.so'): blob_fixup()
