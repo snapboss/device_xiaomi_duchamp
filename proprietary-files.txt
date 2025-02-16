@@ -1431,9 +1431,6 @@ vendor/lib64/vendor.xiaomi.hardware.mlipay-V1-ndk.so
 vendor/etc/mtk_platform_codecs_config.xml
 vendor/etc/seccomp_policy/android.hardware.media.c2@1.2-extended-seccomp-policy
 vendor/etc/seccomp_policy/android.hardware.media.c2@1.2-mediatek-seccomp-policy
-vendor/etc/seccomp_policy/mediacodec.policy
-vendor/etc/seccomp_policy/mediaextractor.policy
-vendor/etc/seccomp_policy/mediaswcodec.policy
 
 # Media (C2)
 vendor/bin/hw/android.hardware.media.c2@1.2-mediatek-64b
