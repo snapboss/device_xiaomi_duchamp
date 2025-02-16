@@ -8,7 +8,7 @@
     android:title="@string/thermal_title">
 
     <com.android.settingslib.widget.MainSwitchPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="thermal_enable"
         android:title="@string/thermal_enable" />
 
