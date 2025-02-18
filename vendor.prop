@@ -256,9 +256,6 @@ ro.hardware.fp.fod.location=low
 ro.hardware.fp.fod.touch.ctl.version=2.0
 ro.hardware.fp.fod=true
 
-# FRP
-ro.frp.pst=/dev/block/by-name/frp
-
 # FUSE passthrough
 persist.sys.fuse.passthrough.enable=true
 
