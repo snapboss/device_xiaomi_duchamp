@@ -5,10 +5,10 @@
 //
 
 cc_binary {
-    name: "android.hardware.biometrics.fingerprint-service.xiaomi",
+    name: "android.hardware.biometrics.fingerprint-service.mt6897",
     relative_install_path: "hw",
-    init_rc: ["android.hardware.biometrics.fingerprint-service.xiaomi.rc"],
-    vintf_fragments: ["android.hardware.biometrics.fingerprint-service.xiaomi.xml"],
+    init_rc: ["android.hardware.biometrics.fingerprint-service.mt6897.rc"],
+    vintf_fragments: ["android.hardware.biometrics.fingerprint-service.mt6897.xml"],
     header_libs: [
         "xiaomi_fingerprint_headers",
     ],
