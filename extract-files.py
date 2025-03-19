@@ -37,7 +37,6 @@ lib_fixups: lib_fixups_user_type = {
      'libmialgo_utils',
      'libultrahdr',
      'vendor.mediatek.hardware.videotelephony-V1-ndk',
-     'vendor.xiaomi.hardware.fingerprintextension-V1-ndk',
      'vendor.xiaomi.hw.touchfeature-V1-ndk'): lib_fixup_vendor_suffix,
     ('libsink',): lib_fixup_remove,
 }
