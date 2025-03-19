@@ -9,26 +9,31 @@
 #include <hardware/hardware.h>
 #include <hardware/hw_auth_token.h>
 
+#include "xiaomi_touch.h"
+
 #define COMMAND_NIT 10
 #define PARAM_NIT_FOD 1
 #define PARAM_NIT_NONE 0
 
 #define COMMAND_FOD_PRESS_STATUS 1
-#define COMMAND_FOD_PRESS_X 2
-#define COMMAND_FOD_PRESS_Y 3
 #define PARAM_FOD_PRESSED 1
 #define PARAM_FOD_RELEASED 0
 
-#define FOD_STATUS_PATH "/sys/class/touch/touch_dev/fod_press_status"
 #define FOD_STATUS_OFF 0
 #define FOD_STATUS_ON 1
 
-#define DISP_PARAM_PATH "/sys/devices/virtual/mi_display/disp_feature/disp-DSI-0/disp_param"
+#define TOUCH_DEV_PATH "/dev/xiaomi-touch"
+#define TOUCH_ID 0
+#define TOUCH_MAGIC 'T'
+#define TOUCH_IOC_SET_CUR_VALUE _IO(TOUCH_MAGIC, SET_CUR_VALUE)
+#define TOUCH_IOC_GET_CUR_VALUE _IO(TOUCH_MAGIC, GET_CUR_VALUE)
+
+#define DISP_PARAM_PATH "sys/devices/virtual/mi_display/disp_feature/disp-DSI-0/disp_param"
 #define DISP_PARAM_LOCAL_HBM_MODE "9"
 #define DISP_PARAM_LOCAL_HBM_OFF "0"
 #define DISP_PARAM_LOCAL_HBM_ON "1"
 
-#define FINGERPRINT_ACQUIRED_VENDOR 7
+#define FOD_PRESS_STATUS_PATH "/sys/class/touch/touch_dev/fod_press_status"
 
 typedef struct fingerprint_hal {
     const char* class_name;
@@ -395,11 +400,10 @@ typedef struct fingerprint_device {
     void (*onPointerUp)(struct fingerprint_device* dev, int32_t pointerId);
 
     /**
-     * goodixExtCmd：
      *
      * Xiaomi's vendor function to send extra command to fingerprint module.
      */
-    uint64_t (*goodixExtCmd)(struct fingerprint_device* dev, int32_t cmd, int32_t param);
+    uint64_t (*extCmd)(struct fingerprint_device* dev, int32_t cmd, int32_t param);
 
     /* Reserved for backward binary compatibility */
     void* reserved[2];

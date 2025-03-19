@@ -8,10 +8,15 @@
 
 #include <aidl/android/hardware/biometrics/fingerprint/ISessionCallback.h>
 #include <aidl/android/hardware/biometrics/fingerprint/SensorLocation.h>
+#include <poll.h>
+#include <sys/ioctl.h>
 #include <fstream>
 #include <future>
 #include <string>
+#include <thread>
 #include <vector>
+
+#include <android-base/unique_fd.h>
 
 #include "LockoutTracker.h"
 #include "fingerprint-xiaomi.h"
@@ -21,6 +26,8 @@ namespace aidl::android::hardware::biometrics::fingerprint {
 class FingerprintEngine {
   public:
     FingerprintEngine();
+
+    void init(fingerprint_device_t* device);
 
     void setActiveGroup(int userId);
     void onAcquired(int32_t result, int32_t vendorCode);
@@ -52,16 +59,14 @@ class FingerprintEngine {
   private:
     fingerprint_device_t* openFingerprintHal(const char* class_name, const char* module_id);
     void setFodStatus(int value);
-    void setFingerStatus(bool pressed);
+    void setFingerDown(bool pressed);
     void clearLockout(ISessionCallback* cb, bool dueToTimeout = false);
-
-    template <typename T>
-    void set(const std::string& path, const T& value);
 
     void startLockoutTimer(int64_t timeout, ISessionCallback* cb);
     void lockoutTimerExpired(ISessionCallback* cb);
 
     fingerprint_device_t* mDevice;
+    ::android::base::unique_fd touch_fd_;
 
     bool isLockoutTimerSupported;
     bool isLockoutTimerStarted = false;

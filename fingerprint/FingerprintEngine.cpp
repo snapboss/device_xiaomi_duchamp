@@ -16,7 +16,38 @@
 #include "util/CancellationSignal.h"
 #include "util/Util.h"
 
+using ::aidl::android::hardware::biometrics::fingerprint::AcquiredInfo;
+
 namespace aidl::android::hardware::biometrics::fingerprint {
+
+namespace {
+
+template <typename T>
+static void set(const std::string& path, const T& value) {
+    std::ofstream file(path);
+    file << value;
+}
+
+static bool readBool(int fd) {
+    char c;
+    int rc;
+
+    rc = lseek(fd, 0, SEEK_SET);
+    if (rc) {
+        LOG(ERROR) << "failed to seek fd, err: " << rc;
+        return false;
+    }
+
+    rc = read(fd, &c, sizeof(char));
+    if (rc != 1) {
+        LOG(ERROR) << "failed to read bool from fd, err: " << rc;
+        return false;
+    }
+
+    return c != '0';
+}
+
+}  // anonymous namespace
 
 FingerprintEngine::FingerprintEngine() : isLockoutTimerSupported(true) {
     if (mDevice) {
@@ -49,6 +80,7 @@ FingerprintEngine::FingerprintEngine() : isLockoutTimerSupported(true) {
         if (!mDevice) {
             LOG(ERROR) << "Can't open any fingerprint HAL module";
         }
+        init(mDevice);
     }
 }
 
@@ -103,42 +135,63 @@ fingerprint_device_t* FingerprintEngine::openFingerprintHal(const char* class_na
     return fp_device;
 }
 
+void FingerprintEngine::init(fingerprint_device_t* device) {
+    mDevice = device;
+    touch_fd_ = ::android::base::unique_fd(open(TOUCH_DEV_PATH, O_RDWR));
+
+    std::thread([this]() {
+        int fd = open(FOD_PRESS_STATUS_PATH, O_RDONLY);
+        if (fd < 0) {
+            LOG(ERROR) << "failed to open fd, err: " << fd;
+            return;
+        }
+
+        struct pollfd fodPressStatusPoll = {
+                .fd = fd,
+                .events = POLLERR | POLLPRI,
+                .revents = 0,
+        };
+
+        while (true) {
+            int rc = poll(&fodPressStatusPoll, 1, -1);
+            if (rc < 0) {
+                LOG(ERROR) << "failed to poll fd, err: " << rc;
+                continue;
+            }
+
+            mDevice->extCmd(mDevice, COMMAND_FOD_PRESS_STATUS,
+                            readBool(fd) ? PARAM_FOD_PRESSED : PARAM_FOD_RELEASED);
+        }
+    }).detach();
+}
+
 void FingerprintEngine::onAcquired(int32_t result, int32_t vendorCode) {
-    LOG(INFO) << __func__;
-    LOG(INFO) << " result: " << result << " vendorCode: " << vendorCode;
-    if (result != FINGERPRINT_ACQUIRED_VENDOR) {
-        setFingerStatus(false);
-        if (result == FINGERPRINT_ACQUIRED_GOOD) setFodStatus(FOD_STATUS_OFF);
-    } else if (vendorCode == 20 || vendorCode == 22) {
+    LOG(INFO) << __func__ << " result: " << result << " vendorCode: " << vendorCode;
+    if (static_cast<AcquiredInfo>(result) == AcquiredInfo::GOOD) {
+        setFingerDown(false);
+        setFodStatus(FOD_STATUS_OFF);
+    } else if (vendorCode == 21 || vendorCode == 23) {
         /*
-         * vendorCode = 20 waiting for fingerprint authentication
-         * vendorCode = 22 waiting for fingerprint enroll
+         * vendorCode = 21 waiting for fingerprint authentication
+         * vendorCode = 23 waiting for fingerprint enroll
          */
         setFodStatus(FOD_STATUS_ON);
-    } else if (vendorCode == 44) {
-        /* vendorCode = 44 fingerprint scan failed */
-        setFingerStatus(false);
     }
 }
 
 void FingerprintEngine::setFodStatus(int value) {
-    set(FOD_STATUS_PATH, value);
+    int buf[MAX_BUF_SIZE] = {TOUCH_ID, Touch_Fod_Enable, value};
+    ioctl(touch_fd_.get(), TOUCH_IOC_SET_CUR_VALUE, &buf);
 }
 
-void FingerprintEngine::setFingerStatus(bool pressed) {
-    LOG(INFO) << __func__;
-    mDevice->goodixExtCmd(mDevice, COMMAND_FOD_PRESS_STATUS,
-                          pressed ? PARAM_FOD_PRESSED : PARAM_FOD_RELEASED);
-    mDevice->goodixExtCmd(mDevice, COMMAND_NIT, pressed ? PARAM_NIT_FOD : PARAM_NIT_NONE);
+void FingerprintEngine::setFingerDown(bool pressed) {
+    mDevice->extCmd(mDevice, COMMAND_NIT, pressed ? PARAM_NIT_FOD : PARAM_NIT_NONE);
+
+    int buf[MAX_BUF_SIZE] = {TOUCH_ID, Touch_Fod_Enable, pressed ? 1 : 0};
+    ioctl(touch_fd_.get(), TOUCH_IOC_SET_CUR_VALUE, &buf);
 
     set(DISP_PARAM_PATH, std::string(DISP_PARAM_LOCAL_HBM_MODE) + " " +
                                  (pressed ? DISP_PARAM_LOCAL_HBM_ON : DISP_PARAM_LOCAL_HBM_OFF));
-}
-
-template <typename T>
-void FingerprintEngine::set(const std::string& path, const T& value) {
-    std::ofstream file(path);
-    file << value;
 }
 
 void FingerprintEngine::generateChallengeImpl(ISessionCallback* /*cb*/) {
@@ -232,25 +285,20 @@ void FingerprintEngine::clearLockout(ISessionCallback* cb, bool dueToTimeout) {
     mLockoutTracker.reset(dueToTimeout);
 }
 
-ndk::ScopedAStatus FingerprintEngine::onPointerDownImpl(int32_t /*pointerId*/, int32_t x, int32_t y,
+ndk::ScopedAStatus FingerprintEngine::onPointerDownImpl(int32_t /*pointerId*/, int32_t /*x*/, int32_t /*y*/,
                                                         float /*minor*/, float /*major*/) {
     LOG(INFO) << __func__;
-    // mDevice->onPointerDown(mDevice, pointerId, x, y, minor, major);
-    mDevice->goodixExtCmd(mDevice, COMMAND_FOD_PRESS_X, x);
-    mDevice->goodixExtCmd(mDevice, COMMAND_FOD_PRESS_Y, y);
-    setFingerStatus(true);
 
-    // verify whetehr touch coordinates/area matching sensor location ?
+    setFingerDown(true);
+
     return ndk::ScopedAStatus::ok();
 }
 
 ndk::ScopedAStatus FingerprintEngine::onPointerUpImpl(int32_t /*pointerId*/) {
     LOG(INFO) << __func__;
 
-    // mDevice->onPointerUp(mDevice, pointerId);
-    mDevice->goodixExtCmd(mDevice, COMMAND_FOD_PRESS_X, 0);
-    mDevice->goodixExtCmd(mDevice, COMMAND_FOD_PRESS_Y, 0);
-    setFingerStatus(false);
+    setFingerDown(false);
+
     return ndk::ScopedAStatus::ok();
 }
 
