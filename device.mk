@@ -147,7 +147,16 @@ PRODUCT_VENDOR_LINKER_CONFIG_FRAGMENTS += \
 # Media
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/media,$(TARGET_COPY_OUT_VENDOR)/etc)
-
+    
+# Media (C2)
+  PRODUCT_PACKAGES += \
+       android.hardware.media.c2@1.0.vendor \
+       android.hardware.media.c2@1.1.vendor \
+       android.hardware.media.c2@1.2.vendor \
+       libcodec2_hidl@1.2.vendor \
+       libsfplugin_ccodec_utils.vendor \
+       libcodec2_soft_common.vendor
+ 
 # Lights
 PRODUCT_PACKAGES += \
     android.hardware.light-service.lineage
@@ -253,9 +262,11 @@ include $(DEVICE_PATH)/vendor_logtag.mk
 #PRODUCT_PACKAGES += \
 #    ColumbusService
 
-# Moto Dolby
+# Dolby
 $(call inherit-product, hardware/dolby/dolby.mk)
 
+PRODUCT_PACKAGES += \
+     libstagefright_foundation-v33
 # SKU
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/sku/,$(TARGET_COPY_OUT_ODM)/etc)
@@ -340,6 +351,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/thermal_info_config.json:$(TARGET_COPY_OUT_VENDOR)/etc/thermal_info_config.json
 
+# XiaomiTWS
+PRODUCT_PACKAGES += \
+    XiaomiBluetooth
+    
 # Lineage Health
 PRODUCT_PACKAGES += \
     vendor.lineage.health-service.default

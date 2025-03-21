@@ -25,6 +25,9 @@ AB_OTA_PARTITIONS := \
     vendor_boot \
     vendor_dlkm
 
+# Audio
+AUDIO_FEATURE_ENABLED_DS2_DOLBY_DAP := true
+ 
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv9-a
@@ -159,7 +162,7 @@ TARGET_USERIMAGES_USE_F2FS := true
 ENABLE_VENDOR_RIL_SERVICE := true
 
 # Security patch level
-VENDOR_SECURITY_PATCH := 2024-12-01
+VENDOR_SECURITY_PATCH := 2025-01-01
 
 # SELinux
 include device/mediatek/sepolicy_vndr/SEPolicy.mk
