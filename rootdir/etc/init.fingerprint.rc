@@ -2,6 +2,10 @@ on boot
     #GOODIX
     chmod 0666 /dev/goodix_fp
     chown system system /dev/goodix_fp
+    chmod 0664 /dev/fortsense_fp
+    chown system system /dev/fortsense_fp
+    chown system system /dev/focaltech_fp
+    chmod 0644 /dev/focaltech_fp
     #fpc
     chown system system /sys/bus/platform/devices/fingerprint/clk_enable
     chmod 0660 /sys/bus/platform/devices/fingerprint/clk_enable

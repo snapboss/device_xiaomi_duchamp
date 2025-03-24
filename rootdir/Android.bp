@@ -22,21 +22,21 @@ prebuilt_etc {
 prebuilt_etc {
     name: "init.batterysecret.rc",
     src: "etc/init.batterysecret.rc",
-    relative_install_path: "init/hw",
+    sub_dir: "init/hw",
     vendor: true,
 }
 
 prebuilt_etc {
     name: "init.connectivity.rc",
     src: "etc/init.connectivity.rc",
-    relative_install_path: "init/hw",
+    sub_dir: "init/hw",
     vendor: true,
 }
 
 prebuilt_etc {
     name: "init.fingerprint.rc",
     src: "etc/init.fingerprint.rc",
-    relative_install_path: "init/hw",
+    sub_dir: "init/hw",
     vendor: true,
 }
 
@@ -49,63 +49,63 @@ prebuilt_etc {
 prebuilt_etc {
     name: "init.mi_thermald.rc",
     src: "etc/init.mi_thermald.rc",
-    relative_install_path: "init/hw",
+    sub_dir: "init/hw",
     vendor: true,
 }
 
 prebuilt_etc {
     name: "init.modem.rc",
     src: "etc/init.modem.rc",
-    relative_install_path: "init/hw",
+    sub_dir: "init/hw",
     vendor: true,
 }
 
 prebuilt_etc {
     name: "init.mt6897.rc",
     src: "etc/init.mt6897.rc",
-    relative_install_path: "init/hw",
+    sub_dir: "init/hw",
     vendor: true,
 }
 
 prebuilt_etc {
     name: "init.mt6897.power.rc",
     src: "etc/init.mt6897.power.rc",
-    relative_install_path: "init/hw",
+    sub_dir: "init/hw",
     vendor: true,
 }
 
 prebuilt_etc {
     name: "init.mt6897.usb.rc",
     src: "etc/init.mt6897.usb.rc",
-    relative_install_path: "init/hw",
+    sub_dir: "init/hw",
     vendor: true,
 }
 
 prebuilt_etc {
     name: "init.mtkgki.rc",
     src: "etc/init.mtkgki.rc",
-    relative_install_path: "init/hw",
+    sub_dir: "init/hw",
     vendor: true,
 }
 
 prebuilt_etc {
     name: "init.project.rc",
     src: "etc/init.project.rc",
-    relative_install_path: "init/hw",
+    sub_dir: "init/hw",
     vendor: true,
 }
 
 prebuilt_etc {
     name: "init.sensor_2_0.rc",
     src: "etc/init.sensor_2_0.rc",
-    relative_install_path: "init/hw",
+    sub_dir: "init/hw",
     vendor: true,
 }
 
 prebuilt_etc {
     name: "init.target.rc",
     src: "etc/init.target.rc",
-    relative_install_path: "init",
+    sub_dir: "init",
     system_ext_specific: true,
 }
 

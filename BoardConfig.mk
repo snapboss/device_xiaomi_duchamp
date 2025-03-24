@@ -24,9 +24,6 @@ AB_OTA_PARTITIONS := \
     vendor_boot \
     vendor_dlkm
 
-# Audio
-AUDIO_FEATURE_ENABLED_DS2_DOLBY_DAP := true
- 
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv9-a
@@ -74,7 +71,7 @@ BOARD_KERNEL_IMAGE_NAME := Image.gz
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
 BOARD_KERNEL_CMDLINE += rcupdate.rcu_expedited=1 rcu_nocbs=all rcutree.enable_rcu_lazy
 
-#BOARD_BOOTCONFIG := androidboot.selinux=permissive
+BOARD_BOOTCONFIG := androidboot.selinux=permissive
 TARGET_FORCE_PREBUILT_KERNEL := true
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)-kernel/kernel
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)-kernel/dtbo.img

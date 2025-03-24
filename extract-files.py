@@ -54,7 +54,7 @@ blob_fixups: blob_fixups_user_type = {
         .add_needed('libui_shim.so'),
 
     'vendor/lib64/c2.dolby.client.so': blob_fixup()
-        .add_needed('libshim_codec2_hidl.so'),
+        .add_needed('libcodec2_hidl_shim.so'),
 
     ('vendor/bin/hw/android.hardware.media.c2@1.2-mediatek', 'vendor/bin/hw/android.hardware.media.c2@1.2-mediatek-64b'): blob_fixup()
          .add_needed('libstagefright_foundation-v33.so'),
