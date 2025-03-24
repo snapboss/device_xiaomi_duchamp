@@ -231,7 +231,6 @@ vendor.debug.sf.dynamic_duration.sf.earlyGl=14600000
 vendor.debug.sf.dynamic_duration.app.earlyGl=18000000
 vendor.debug.sf.dynamic_duration.sf.decouple=27600000
 vendor.debug.sf.dynamic_duration.app.decouple=20000000
-debug.sf.late.sf.duration=15600000
 vendor.debug.sf.fbthint=1
 vendor.debug.sf.dynamic_duration.sf.late.60=15600000
 vendor.debug.sf.dynamic_duration.app.late.60=16600000
