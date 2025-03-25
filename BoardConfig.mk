@@ -71,7 +71,7 @@ BOARD_KERNEL_IMAGE_NAME := Image.gz
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
 BOARD_KERNEL_CMDLINE += rcupdate.rcu_expedited=1 rcu_nocbs=all rcutree.enable_rcu_lazy
 
-#BOARD_BOOTCONFIG := androidboot.selinux=permissive
+BOARD_BOOTCONFIG := androidboot.selinux=permissive
 TARGET_FORCE_PREBUILT_KERNEL := true
 TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)-kernel/kernel
 BOARD_PREBUILT_DTBOIMAGE := $(DEVICE_PATH)-kernel/dtbo.img
@@ -134,6 +134,8 @@ BOARD_USES_SYSTEM_DLKMIMAGE := true
 BOARD_USES_VENDOR_DLKMIMAGE := true
 
 BOARD_USES_METADATA_PARTITION := true
+
+CAMERA_PACKAGE_NAME := com.android.camera
 
 # Platform
 TARGET_BOARD_PLATFORM := mt6897

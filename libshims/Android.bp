@@ -12,3 +12,7 @@ cc_library_shared {
     ],
     vendor_available: true,
 }
+cc_library {
+     name: "libgui_shim_miuicamera",
+     srcs: ["libgui_shim_miuicamera.c"],
+}

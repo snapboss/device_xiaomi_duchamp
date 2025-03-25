@@ -128,9 +128,9 @@ PRODUCT_VENDOR_PROPERTIES += \
 PRODUCT_PACKAGES += \
     fastbootd
 
-
-# Google Camera
-$(call inherit-product-if-exists, vendor/mgc/config.mk)
+# MiuiCamera
+ PRODUCT_PACKAGES += \
+     MiuiCameraOverlayIcon
 
 # Fingerprint
 PRODUCT_PACKAGES += \
@@ -155,7 +155,15 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     libcodec2_hidl_shim
-    
+
+# miui camera
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/privapp-permissions-miuicamera.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-miuicamera.xml
+
+# Sysconfig
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/miuicamera-hiddenapi-package-allowlist.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/miuicamera-hiddenapi-package-allowlist.xml
+
 # Lights
 PRODUCT_PACKAGES += \
     android.hardware.light-service.lineage
