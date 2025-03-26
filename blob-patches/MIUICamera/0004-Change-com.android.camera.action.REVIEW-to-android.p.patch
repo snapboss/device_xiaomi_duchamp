@@ -1,19 +1,18 @@
-From 02eca938b38320f88c8b8edbe95484f45d66249f Mon Sep 17 00:00:00 2001
-From: Arian <arian.kulmer@web.de>
-Date: Thu, 30 Jan 2025 03:27:27 +0000
-Subject: [PATCH] Change com.android.camera.action.REVIEW to
- android.provider.action.REVIEW This is the standard intent for review actions
+From 6874849fd3e106effe18354b3e3d414d0f165ffa Mon Sep 17 00:00:00 2001
+From: snapboss <mbajrami95@gmail.com>
+Date: Wed, 26 Mar 2025 23:39:31 +0100
+Subject: [PATCH] duchamp: Change com.android.camera.action.REVIEW to
+ android.provider.action.REVIEW
 
-Signed-off-by: Saikrishna1504 <saikrishna26918@gmail.com>
 ---
- smali/com/android/camera/t3.smali | 4 ++--
+ smali/com/android/camera/w3.smali | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/smali/com/android/camera/t3.smali b/smali/com/android/camera/t3.smali
-index c551c1d3..218d1249 100644
---- a/smali/com/android/camera/t3.smali
-+++ b/smali/com/android/camera/t3.smali
-@@ -1138,7 +1138,7 @@
+diff --git a/smali/com/android/camera/w3.smali b/smali/com/android/camera/w3.smali
+index 3ca0b196..38a1bf40 100644
+--- a/smali/com/android/camera/w3.smali
++++ b/smali/com/android/camera/w3.smali
+@@ -1135,7 +1135,7 @@
  
      move-result p0
  
@@ -22,7 +21,7 @@ index c551c1d3..218d1249 100644
  
      if-eqz p0, :cond_0
  
-@@ -1199,7 +1199,7 @@
+@@ -1196,7 +1196,7 @@
  
      const-string p1, "GalleryHelper"
  

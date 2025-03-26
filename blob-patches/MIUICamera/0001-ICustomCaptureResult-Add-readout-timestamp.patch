@@ -1,13 +1,8 @@
-From 89c1a16e22429d5d5aecad0cf4e1b789403a81ee Mon Sep 17 00:00:00 2001
-From: Arian <arian.kulmer@web.de>
-Date: Mon, 13 Mar 2023 15:46:13 +0100
+From f6130d3fdcb6d5e18c75516cb539bded0fdf9f66 Mon Sep 17 00:00:00 2001
+From: snapboss <mbajrami95@gmail.com>
+Date: Wed, 26 Mar 2025 12:42:49 +0100
 Subject: [PATCH] ICustomCaptureResult: Add readout timestamp
 
-commit [1] added two arguments to the CaptureResultExtras constructor.
-Patch MiuiCamera to provide these arguments
-
-https://github.com/LineageOS/android_frameworks_base/commit/91e7522cb28d2b1e2e12adc8726db8190d711f2e
-Signed-off-by: Saikrishna1504 <saikrishna26918@gmail.com>
 ---
  .../protocol/ICustomCaptureResult.smali       | 32 +++++++++++++++++--
  1 file changed, 30 insertions(+), 2 deletions(-)
