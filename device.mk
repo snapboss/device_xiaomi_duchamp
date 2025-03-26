@@ -156,9 +156,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     libcodec2_hidl_shim
 
-# miui camera
+# MIUI Camera
 PRODUCT_COPY_FILES += \
     $(DEVICE_PATH)/configs/privapp-permissions-miuicamera.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-miuicamera.xml
+
+# Public libraries
+PRODUCT_COPY_FILES += \
+    $(DEVICE_PATH)/configs/public.libraries-xiaomi.txt:$(TARGET_COPY_OUT_SYSTEM)/etc/public.libraries-xiaomi.txt
 
 # Sysconfig
 PRODUCT_COPY_FILES += \
