@@ -1,0 +1,2 @@
+# Camera HAL tries to read God knows what property.
+dontaudit mtk_hal_camera default_prop:file read;
