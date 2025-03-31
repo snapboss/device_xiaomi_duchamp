@@ -11,7 +11,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Inherit from device makefile.
 $(call inherit-product, device/xiaomi/duchamp/device.mk)
 
-# Inherit some common VoltageOS stuff.
+# Inherit some common stuff.
 $(call inherit-product, vendor/aosp/config/common_full_phone.mk)
 
 TARGET_FACE_UNLOCK_SUPPORTED := true

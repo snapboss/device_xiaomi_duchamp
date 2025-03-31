@@ -132,10 +132,6 @@ PRODUCT_PACKAGES += \
  PRODUCT_PACKAGES += \
      MiuiCameraOverlayIcon
 
-# Fingerprint
-PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint-service.mt6897
-
 # Health
 PRODUCT_PACKAGES += \
     android.hardware.health-service.mediatek \
@@ -152,9 +148,6 @@ PRODUCT_VENDOR_LINKER_CONFIG_FRAGMENTS += \
 # Media
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/media,$(TARGET_COPY_OUT_VENDOR)/etc)
-
-PRODUCT_PACKAGES += \
-    libcodec2_hidl_shim
 
 # MIUI Camera
 PRODUCT_COPY_FILES += \
@@ -282,6 +275,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/sku/,$(TARGET_COPY_OUT_ODM)/etc)
 
+# Thermals
+PRODUCT_COPY_FILES += \
+    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/thermals/,$(TARGET_COPY_OUT_ODM)/etc)
+    
 # Radio
 PRODUCT_PACKAGES += \
     vendor_mdota_symlink
@@ -325,11 +322,12 @@ PRODUCT_PACKAGES += \
     init.project.rc \
     init.sensor_2_0.rc \
     init.target.rc \
-    ueventd.mtk.rc
+    ueventd.mtk.rc \
+    init.refresh.rate.rc
 
 PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/rootdir/etc/init.recovery.mt6897.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6897.rc
-
+    $(DEVICE_PATH)/rootdir/etc/init.recovery.mt6897.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6897.rc \
+    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/refreshmonitor,$(TARGET_COPY_OUT_VENDOR)/bin)
 # Sensors
 PRODUCT_PACKAGES += \
    android.hardware.sensors-service.xiaomi-multihal \

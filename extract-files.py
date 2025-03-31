@@ -37,6 +37,7 @@ lib_fixups: lib_fixups_user_type = {
      'libmialgo_utils',
      'libultrahdr',
      'vendor.mediatek.hardware.videotelephony-V1-ndk',
+     'vendor.xiaomi.hardware.fingerprintextension-V1-ndk',
      'vendor.xiaomi.hw.touchfeature-V1-ndk',
      'vendor.mediatek.hardware.camera.isphal@1.0',
      'vendor.mediatek.hardware.camera.isphal-V1-ndk'): lib_fixup_vendor_suffix,
@@ -57,11 +58,8 @@ blob_fixups: blob_fixups_user_type = {
         .add_needed('libui_shim.so'),
 
     'vendor/lib64/c2.dolby.client.so': blob_fixup()
-        .add_needed('libcodec2_hidl_shim.so'),
+        .add_needed('libshim_codec2_hidl.so'),
 
-    ('vendor/bin/hw/android.hardware.media.c2@1.2-mediatek', 'vendor/bin/hw/android.hardware.media.c2@1.2-mediatek-64b'): blob_fixup()
-         .add_needed('libstagefright_foundation-v33.so'),
-         
     'vendor/lib64/hw/audio.primary.mediatek.so': blob_fixup()
         .replace_needed('android.hardware.audio.common-V1-ndk.so', 'android.hardware.audio.common-V2-ndk.so')
         .replace_needed('libalsautils.so', 'libalsautils-v34.so'),
@@ -100,7 +98,6 @@ blob_fixups: blob_fixups_user_type = {
      'vendor/lib64/libmtkcam_grallocutils_aidlv1helper.so'): blob_fixup()
         .replace_needed('android.hardware.graphics.allocator-V1-ndk.so', 'android.hardware.graphics.allocator-V2-ndk.so')
         .replace_needed('android.hardware.graphics.common-V4-ndk.so', 'android.hardware.graphics.common-V6-ndk.so'),
-  # fmt: skip
 
      ('odm/lib64/libmt_mitee.so',
       'vendor/bin/hw/android.hardware.security.keymint@3.0-service.mitee'): blob_fixup()
@@ -114,12 +111,13 @@ blob_fixups: blob_fixups_user_type = {
       'system_ext/lib64/libcamera_ispinterface_jni.xiaomi.so'): blob_fixup()
         .add_needed('libgui_shim_miuicamera.so'),
 
-    'system_ext/lib64/vendor.mediatek.hardware.camera.isphal-V1-ndk.so': blob_fixup()
-        .replace_needed('android.hardware.graphics.common-V5-ndk.so', 'android.hardware.graphics.common-V6-ndk.so'),
+      'system_ext/lib64/vendor.mediatek.hardware.camera.isphal-V1-ndk.so': blob_fixup()
+         .replace_needed('android.hardware.graphics.common-V5-ndk.so', 'android.hardware.graphics.common-V6-ndk.so'),
 
       'system_ext/priv-app/MiuiCamera/MiuiCamera.apk': blob_fixup()
         .apktool_patch('blob-patches/MIUICamera/'),
-}
+}  # fmt: skip
+
 module = ExtractUtilsModule(
     'duchamp',
     'xiaomi',

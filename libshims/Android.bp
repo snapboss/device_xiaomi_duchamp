@@ -1,18 +1,20 @@
 //
-// Copyright (C) 2020 The LineageOS Project
+// Copyright (C) 2023 The LineageOS Project
 //
 // SPDX-License-Identifier: Apache-2.0
 //
 
 cc_library_shared {
-    name: "libcodec2_hidl_shim",
-    srcs: ["libcodec2_hidl_shim.cpp"],
+    name: "libshim_codec2_hidl",
+    srcs: ["libshim_codec2_hidl.cpp"],
+    compile_multilib: "64",
     shared_libs: [
         "libcodec2_hidl@1.0",
     ],
-    vendor_available: true,
+    vendor: true,
 }
+
 cc_library {
-     name: "libgui_shim_miuicamera",
-     srcs: ["libgui_shim_miuicamera.c"],
+    name: "libgui_shim_miuicamera",
+    srcs: ["libgui_shim_miuicamera.c"],
 }
