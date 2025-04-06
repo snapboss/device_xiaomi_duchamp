@@ -322,12 +322,11 @@ PRODUCT_PACKAGES += \
     init.project.rc \
     init.sensor_2_0.rc \
     init.target.rc \
-    ueventd.mtk.rc \
-    init.refresh.rate.rc
+    ueventd.mtk.rc
 
 PRODUCT_COPY_FILES += \
-    $(DEVICE_PATH)/rootdir/etc/init.recovery.mt6897.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6897.rc \
-    $(call find-copy-subdir-files,*,$(DEVICE_PATH)/configs/refreshmonitor,$(TARGET_COPY_OUT_VENDOR)/bin)
+    $(DEVICE_PATH)/rootdir/etc/init.recovery.mt6897.rc:$(TARGET_COPY_OUT_RECOVERY)/root/init.recovery.mt6897.rc
+
 # Sensors
 PRODUCT_PACKAGES += \
    android.hardware.sensors-service.xiaomi-multihal \

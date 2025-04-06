@@ -13,12 +13,6 @@ sh_binary {
 }
 
 prebuilt_etc {
-    name: "init.refresh.rate.rc",
-    src: "etc/init.refresh.rate.rc",
-    sub_dir: "init/hw",
-    vendor: true,
-}
-prebuilt_etc {
     name: "fstab.mt6897",
     src: "etc/fstab.mt6897",
     vendor: true,

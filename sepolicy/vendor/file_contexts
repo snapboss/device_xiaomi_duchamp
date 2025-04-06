@@ -121,9 +121,3 @@
 
 # HTSR
 /sys/devices/platform/goodix_ts.0/switch_report_rate                                                   u:object_r:sysfs_htsr:s0
-
-# RefreshMonitor
-/vendor/bin/refresh_monitor\.sh                                                                        u:object_r:shell_exec:s0
-/vendor/bin/set_refresh\.sh                                                                            u:object_r:shell_exec:s0
-
-
