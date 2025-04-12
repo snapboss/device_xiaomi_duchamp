@@ -32,7 +32,7 @@
             android:name=".BootCompletedReceiver"
             android:exported="false"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-            <intent-filter android:priority="1000">
+            <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -119,7 +119,6 @@
             android:permission="RefreshService">
         </service>
 
-
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
@@ -132,6 +131,7 @@
                 <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <!-- Activity for Touch Sampling Settings -->
         <activity
             android:name=".touchsampling.TouchSamplingSettingsActivity"
@@ -180,6 +180,39 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
+
+        <!-- Turbo Charging -->
+        <activity
+            android:name=".turbocharging.TurboChargingActivity"
+            android:exported="false"
+            android:label="@string/turbo_charge_title"
+            android:theme="@style/Theme.SubSettingsBase">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+            </intent-filter>
+            <meta-data
+                android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.battery" />
+            <meta-data
+                android:name="com.android.settings.summary"
+                android:resource="@string/turbo_charge_summary" />
+        </activity>
+
+        <service
+            android:name=".turbocharging.TurboChargingService"
+            android:permission="TurboChargingService">
+        </service>
+
+        <!-- Tile Entry Activity -->
+        <activity
+            android:name=".TileEntryActivity"
+            android:label="@string/app_title"
+            android:exported="true"
+            android:theme="@style/Theme.SubSettingsBase">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+            </intent-filter>
+        </activity>
 
     </application>
 </manifest>

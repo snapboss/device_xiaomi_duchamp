@@ -15,6 +15,19 @@
      limitations under the License.
 -->
 <resources>
+
+    <string-array name="turbo_modes_entries">
+        <item>@string/turbo_mode_one</item>
+        <item>@string/turbo_mode_two</item>
+        <item>@string/turbo_mode_three</item>
+    </string-array>
+
+    <string-array name="turbo_modes_values">
+        <item>4500000</item>
+        <item>7000000</item>
+        <item>22000000</item>
+    </string-array>
+
     <string-array name="doze_brightness_level">
         <item>@string/doze_brightness_low</item>
         <item>@string/doze_brightness_high</item>
@@ -25,4 +38,5 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+
 </resources>
