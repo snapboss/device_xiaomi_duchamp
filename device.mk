@@ -128,6 +128,11 @@ $(call inherit-product, hardware/dolby/dolby.mk)
 PRODUCT_PACKAGES += \
     fastbootd
 
+# Fingerprint
+$(call soong_config_set,xiaomi_hardware_biometrics,use_new_impl,true)
+PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint-service.xiaomi
+
 # Health
 PRODUCT_PACKAGES += \
     android.hardware.health-service.mediatek \

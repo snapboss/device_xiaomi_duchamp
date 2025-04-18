@@ -4,6 +4,7 @@ genfscon sysfs /devices/platform/11d00000.i2c/i2c-0/0-005a/f0_value u:object_r:s
 
 # Display
 genfscon sysfs /devices/virtual/mi_display/disp_feature/disp-DSI-0/brightness_clone                   u:object_r:vendor_displayfeature_sysfs:s0
+genfscon sysfs /devices/virtual/mi_display/disp_feature/disp-DSI-0/disp_param                         u:object_r:vendor_displayfeature_sysfs:s0
 genfscon sysfs /devices/virtual/mi_display/disp_feature/disp-DSI-0/panel_info                         u:object_r:vendor_displayfeature_sysfs:s0
 genfscon sysfs /devices/virtual/mi_display/disp_feature/disp-DSI-0/wp_info                            u:object_r:vendor_displayfeature_sysfs:s0
 

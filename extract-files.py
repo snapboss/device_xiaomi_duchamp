@@ -34,7 +34,6 @@ lib_fixups: lib_fixups_user_type = {
     ('libmialgo_aio_seg',
      'libmialgo_utils',
      'vendor.mediatek.hardware.videotelephony-V1-ndk',
-     'vendor.xiaomi.hardware.fingerprintextension-V1-ndk',
      'vendor.xiaomi.hw.touchfeature-V1-ndk'): lib_fixup_vendor_suffix,
 }
 
@@ -65,10 +64,6 @@ blob_fixups: blob_fixups_user_type = {
 
     'vendor/lib64/vendor.mediatek.hardware.bluetooth.audio-V1-ndk.so': blob_fixup()
         .replace_needed('android.hardware.audio.common-V1-ndk.so', 'android.hardware.audio.common-V2-ndk.so'),
-
-    'vendor/bin/hw/mfp-daemon': blob_fixup()
-        .replace_needed('android.hardware.biometrics.common-V3-ndk.so', 'android.hardware.biometrics.common-V4-ndk.so')
-        .replace_needed('android.hardware.biometrics.fingerprint-V3-ndk.so', 'android.hardware.biometrics.fingerprint-V4-ndk.so'),
 
     ('vendor/bin/hw/mt6897/android.hardware.graphics.allocator-V2-service-mediatek.mt6897',
      'vendor/lib64/egl/mt6897/libGLES_mali.so',
