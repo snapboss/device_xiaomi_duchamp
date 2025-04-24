@@ -13,6 +13,12 @@ vendor.audio.spkcal.copy.inhal=true
 vendor.audio.usb.super_hifi=true
 vendor.audio.usb.iems.period_us=5000
 vendor.audiohal.telephonytx.type=2
+audio.offload.video=true
+audio.offload.min.duration.secs=30
+audio.deep_buffer.media=true
+AUDIO_CAMERA_GAIN=true
+AUDIO_FEATURE_REVERSE_MIC_DIRECTION_SUPPORT=true
+AUDIO_FEATURE_SEPARATE_RCV_SPK_CALL_TX=true
 
 # Audio (Dolby)
 ro.vendor.audio.device.db=DB_XM
@@ -49,6 +55,15 @@ bluetooth.profile.vcp.controller.enabled=true
 ro.vendor.bt.connac3=no
 ro.vendor.bt.platform=6897
 vendor.bluetooth.ldac.abr=true
+ro.bluetooth.a2dp_offload.supported=true
+persist.bluetooth.a2dp_offload.cap=sbc-aac
+persist.bluetooth.a2dp_offload.disabled=false
+persist.vendor.bluetooth.supportopphdt=no
+persist.vendor.bluetooth.leaudio_mode=ums-cg
+ro.bluetooth.leaudio_offload.supported=true
+persist.bluetooth.leaudio_offload.disabled=false
+persist.vendor.bluetooth.broadcaster.tx_pwr=10
+persist.vendor.bluetooth.connection_improve=yes
 
 # Blur
 ro.launcher.blur.appLaunch=0
@@ -251,6 +266,7 @@ vendor.debug.sf.dynamic_duration.app.early.120=11600000
 vendor.debug.sf.dynamic_duration.sf.earlyGl.120=12300000
 vendor.debug.sf.dynamic_duration.app.earlyGl.120=11600000
 debug.sf.set_binder_thread_rt=1
+ro.gfx.driver.0=com.mediatek.mt6897.gamedriver
 
 # Display (EGL/Gralloc)
 ro.vendor.arm.egl.configs.nv12.hal_format=0x200

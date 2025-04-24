@@ -1346,6 +1346,9 @@ vendor/bin/hw/android.hardware.gatekeeper-service.mitee
 vendor/etc/init/android.hardware.gatekeeper-service.mitee.rc
 vendor/etc/vintf/manifest/android.hardware.gatekeeper-service.mitee.xml
 
+# GameDriver
+vendor/priv-app/GpuGameDriver.mt6897/GpuGameDriver.mt6897.apk
+
 # GNSS
 vendor/bin/hw/android.hardware.gnss-service.mediatek
 vendor/bin/mnld
