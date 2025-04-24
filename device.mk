@@ -150,6 +150,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vendor.lineage.health-service.default
 
+# MiuiCamera Icon
+PRODUCT_PACKAGES += \
+    MiuiCameraOverlayIcon
+
 # NFC
 PRODUCT_PACKAGES += \
     android.hardware.nfc-service.nxp \
