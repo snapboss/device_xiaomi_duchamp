@@ -3,7 +3,6 @@ persist.vendor.dc_backlight.enable=false
 ro.vendor.cabc.enable=false
 ro.vendor.display.all_modes_support_WCG.enable=true
 ro.vendor.display.update_gray_by_temperature=true
-ro.vendor.displayfeature.dump=true
 ro.vendor.histogram.enable=1
 ro.vendor.localhbm.enable=true
 ro.vendor.mi_sf.hdr_enable_flatmode=true
