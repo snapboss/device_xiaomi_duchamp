@@ -5,4 +5,4 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/aosp_duchamp.mk
+    $(LOCAL_DIR)/alpha_duchamp.mk

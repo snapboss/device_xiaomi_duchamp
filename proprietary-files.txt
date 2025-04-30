@@ -1677,6 +1677,7 @@ vendor/lib64/vendor.mediatek.hardware.videotelephony-V1-ndk.so;MODULE_SUFFIX=-ve
 
 # Radio (Engineer Mode) - from fire-user 14 UP1A.231005.007 V816.0.1.0.UMXMIXM release-keys
 system_ext/app/EngineerMode/EngineerMode.apk
+system_ext/lib/libem_support_jni.so
 system_ext/lib64/libem_support_jni.so
 vendor/bin/em_hidl
 vendor/etc/init/em_hidl_user.rc

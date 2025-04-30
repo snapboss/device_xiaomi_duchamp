@@ -16,3 +16,12 @@ install_symlink {
     installed_location: "etc/mdota",
     symlink_target: "/mnt/vendor/mdota",
 }
+prebuilt_hidl_interfaces {
+     name: "hidl_emd_interface",
+     interfaces: [
+         "vendor.mediatek.hardware.engineermode@1.0::IEmd",
+         "vendor.mediatek.hardware.engineermode@1.1::IEmd",
+         "vendor.mediatek.hardware.engineermode@1.2::IEmd",
+         "vendor.mediatek.hardware.engineermode@1.3::IEmd",
+     ],
+ }
