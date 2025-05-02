@@ -57,6 +57,15 @@ bluetooth.profile.vcp.controller.enabled=true
 ro.vendor.bt.connac3=no
 ro.vendor.bt.platform=6897
 vendor.bluetooth.ldac.abr=true
+ro.bluetooth.a2dp_offload.supported=true
+persist.bluetooth.a2dp_offload.cap=sbc-aac
+persist.bluetooth.a2dp_offload.disabled=false
+persist.vendor.bluetooth.supportopphdt=no
+persist.vendor.bluetooth.leaudio_mode=ums-cg
+ro.bluetooth.leaudio_offload.supported=true
+persist.bluetooth.leaudio_offload.disabled=false
+persist.vendor.bluetooth.broadcaster.tx_pwr=10
+persist.vendor.bluetooth.connection_improve=yes
 
 # Camera
 camera.disable_zsl_mode=1
