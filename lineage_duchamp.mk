@@ -11,12 +11,20 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Inherit from device makefile.
 $(call inherit-product, device/xiaomi/duchamp/device.mk)
 
-# Inherit some common The Pixel Project stuff.
-$(call inherit-product, vendor/aosp/config/common_full_phone.mk)
+# Inherit some common Lineage stuff.
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
-CUSTOM_MAINTAINER := Luxured
+# To include Gapps 
+WITH_GMS := true
+WITH_GMS_COMMS_SUITE := true
+TARGET_SUPPORTS_WALLEFFECT := true
+TARGET_SUPPORTS_GOOGLE_RECORDER := true
+MATRIXX_BUILD_TYPE := Unofficial
+# Inherit some common device props
+TARGET_FACE_UNLOCK_SUPPORTED := true
+TARGET_HAS_UDFPS := true
 
-PRODUCT_NAME := aosp_duchamp
+PRODUCT_NAME := lineage_duchamp
 PRODUCT_DEVICE := duchamp
 PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_BRAND := POCO
@@ -26,7 +34,7 @@ PRODUCT_SYSTEM_NAME := duchamp_global
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BuildDesc="duchamp_global-user 15 AP3A.240905.015.A2 OS2.0.1.0.VNLMIXM release-keys" \
-    BuildFingerprint=POCO/duchamp_global/duchamp:14/UP1A.230905.011/OS2.0.1.0.VNLMIXM:user/release-keys \
+    BuildDesc="duchamp_global-user 15 AP3A.240905.015.A2 OS2.0.100.0.VNLMIXM release-keys" \
+    BuildFingerprint=POCO/duchamp_global/duchamp:14/UP1A.230905.011/OS2.0.100.0.VNLMIXM:user/release-keys \
     DeviceProduct=$(PRODUCT_SYSTEM_NAME)
 
