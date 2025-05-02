@@ -13,6 +13,12 @@ vendor.audio.spkcal.copy.inhal=true
 vendor.audio.usb.super_hifi=true
 vendor.audio.usb.iems.period_us=5000
 vendor.audiohal.telephonytx.type=2
+audio.offload.video=true
+audio.offload.min.duration.secs=30
+audio.deep_buffer.media=true
+AUDIO_CAMERA_GAIN=true
+AUDIO_FEATURE_REVERSE_MIC_DIRECTION_SUPPORT=true
+AUDIO_FEATURE_SEPARATE_RCV_SPK_CALL_TX=true
 
 # Audio (Dolby)
 ro.vendor.audio.device.db=DB_XM
