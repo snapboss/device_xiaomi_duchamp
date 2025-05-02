@@ -367,6 +367,9 @@ PRODUCT_PACKAGES += \
     libwifi-hal-wrapper \
     wpa_supplicant
 
+# Include the keys.mk file
+-include vendor/lineage-priv/keys/keys.mk
+
 # Inherit the proprietary files
 $(call inherit-product-if-exists, device/xiaomi/duchamp-miuicamera/device.mk)
 $(call inherit-product, vendor/xiaomi/duchamp/duchamp-vendor.mk)
