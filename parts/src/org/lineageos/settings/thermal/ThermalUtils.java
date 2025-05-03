@@ -64,8 +64,8 @@ public final class ThermalUtils {
         STATE_DIALER, "1",
         STATE_GAMING, "19",
         STATE_NAVIGATION, "19",
-        STATE_STREAMING, "4",
-        STATE_VIDEO, "21"
+        STATE_STREAMING, "1",
+        STATE_VIDEO, "1"
     );
 
     private static final String THERMAL_BENCHMARK = "thermal.benchmark=";

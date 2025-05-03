@@ -16,7 +16,12 @@
 
 package org.lineageos.settings.thermal;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.PowerManager;
 import android.service.quicksettings.Tile;
@@ -37,11 +42,14 @@ public class ThermalTileService extends TileService {
     private String[] modes;
     private int currentMode = 0; // Default mode index
     private SharedPreferences mSharedPrefs;
-
+    private NotificationManager mNotificationManager;
+    private Notification mNotification;
+    
     @Override
     public void onCreate() {
         super.onCreate();
         mSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         // Ensure a default value for the master switch
         if (!mSharedPrefs.contains(THERMAL_ENABLED_KEY)) {
@@ -55,6 +63,7 @@ public class ThermalTileService extends TileService {
         modes = new String[]{
                 getString(R.string.thermal_mode_default),
                 getString(R.string.thermal_mode_performance),
+                getString(R.string.thermal_mode_gaming),
                 getString(R.string.thermal_mode_battery_saver),
                 getString(R.string.thermal_mode_unknown)
         };
@@ -66,7 +75,7 @@ public class ThermalTileService extends TileService {
         } else {
             currentMode = getCurrentThermalMode();
             // Reset to Default if mode is Unknown
-            if (currentMode == 3) {
+            if (currentMode == 4) {
                 currentMode = 0;
                 setThermalMode(currentMode);
             }
@@ -85,12 +94,12 @@ public class ThermalTileService extends TileService {
     }
 
     private void toggleThermalMode() {
-        if (currentMode == 3) {
+        if (currentMode == 4) {
             // If in Unknown mode, reset to Default
             currentMode = 0;
         } else {
             // Cycle through the order: Default → Performance → Battery Saver → Default
-            currentMode = (currentMode + 1) % 3;
+            currentMode = (currentMode + 1) % 4;
         }
         setThermalMode(currentMode);
         updateTile();
@@ -104,8 +113,9 @@ public class ThermalTileService extends TileService {
                 switch (value) {
                     case 0: return 0; // Default
                     case 6: return 1; // Performance
-                    case 1: return 2; // Battery Saver
-                    default: return 3; // Unknown mode
+                    case 19: return 2; // Gaming
+                    case 1: return 3; // Battery Saver
+                    default: return 4; // Unknown mode
                 }
             } catch (NumberFormatException e) {
                 Log.e(TAG, "Error parsing thermal mode value: ", e);
@@ -119,38 +129,25 @@ public class ThermalTileService extends TileService {
         switch (mode) {
             case 0: thermalValue = 0; break;  // Default
             case 1: thermalValue = 6; break;  // Performance
-            case 2: thermalValue = 1; break;  // Battery Saver
+            case 2: thermalValue = 19; break; // Gaming
+            case 3: thermalValue = 1; break;  // Battery Saver
             default: thermalValue = 0; break; // Reset to Default for Unknown
         }
         boolean success = FileUtils.writeLine(THERMAL_SCONFIG, String.valueOf(thermalValue));
         Log.d(TAG, "Thermal mode changed to " + modes[mode] + ": " + success);
 
-        if (mode == 2) { // If Battery Saver mode is selected
-            enableBatterySaver(true);
-        } else {
-            enableBatterySaver(false);
-        }
-    }
-
-    private void enableBatterySaver(boolean enable) {
-        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        if (powerManager != null) {
-            boolean isBatterySaverEnabled = powerManager.isPowerSaveMode();
-            if (enable && !isBatterySaverEnabled) {
-                powerManager.setPowerSaveModeEnabled(true); // Enable Battery Saver
-                Log.d(TAG, "Battery Saver mode enabled.");
-            } else if (!enable && isBatterySaverEnabled) {
-                powerManager.setPowerSaveModeEnabled(false); // Disable Battery Saver
-                Log.d(TAG, "Battery Saver mode disabled.");
+            if (mode == 1) { // Performance mode
+                showPerformanceNotification();
+            } else {
+                cancelPerformanceNotification();
             }
-        }
-    }
+      }
 
     private void updateTile() {
         Tile tile = getQsTile();
         if (tile != null) {
             // Set tile state based on current mode
-            if (currentMode == 1) { // Performance
+            if (currentMode == 1 || currentMode == 2) { // Performance or Gaming
                 tile.setState(Tile.STATE_ACTIVE);
             } else {
                 tile.setState(Tile.STATE_INACTIVE);
@@ -170,5 +167,29 @@ public class ThermalTileService extends TileService {
             tile.setSubtitle(getString(R.string.thermal_tile_disabled_subtitle));
             tile.updateTile();
         }
+    }
+
+    private void setupNotificationChannel() {
+        NotificationChannel channel = new NotificationChannel(TAG, getString(R.string.perf_mode_title), NotificationManager.IMPORTANCE_DEFAULT);
+        channel.setBlockable(true);
+        mNotificationManager.createNotificationChannel(channel);
+    }
+
+    private void showPerformanceNotification() {
+        Intent intent = new Intent(Intent.ACTION_POWER_USAGE_SUMMARY).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        mNotification = new Notification.Builder(this, TAG)
+                .setContentTitle(getString(R.string.perf_mode_title))
+                .setContentText(getString(R.string.perf_mode_notification))
+                .setSmallIcon(R.drawable.ic_thermal_tile)
+                .setContentIntent(pendingIntent)
+                .setOngoing(true)
+                .setFlag(Notification.FLAG_NO_CLEAR, true)
+                .build();
+        mNotificationManager.notify(1, mNotification);
+    }
+
+    private void cancelPerformanceNotification() {
+        mNotificationManager.cancel(1);
     }
 }
