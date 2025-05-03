@@ -23,8 +23,6 @@ AUDIO_FEATURE_SEPARATE_RCV_SPK_CALL_TX=true
 # Audio (Dolby)
 ro.vendor.audio.device.db=DB_XM
 ro.vendor.audio.device.dbcom=dolby_common
-ro.vendor.audio.dolby.dax.support=true
-ro.vendor.dolby.dax.version=DAX3_3.8.5.20_r1
 
 # APK Verity
 ro.apk_verity.mode=2
