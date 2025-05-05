@@ -4,14 +4,6 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-
-sh_binary {
-    name: "init.insmod.sh",
-    src: "bin/init.insmod.sh",
-    required: [ "init.insmod.mtk.cfg" ],
-    vendor: true,
-}
-
 prebuilt_etc {
     name: "fstab.mt6897",
     src: "etc/fstab.mt6897",
@@ -37,12 +29,6 @@ prebuilt_etc {
     name: "init.fingerprint.rc",
     src: "etc/init.fingerprint.rc",
     sub_dir: "init/hw",
-    vendor: true,
-}
-
-prebuilt_etc {
-    name: "init.insmod.mtk.cfg",
-    src: "etc/init.insmod.mtk.cfg",
     vendor: true,
 }
 
@@ -77,13 +63,6 @@ prebuilt_etc {
 prebuilt_etc {
     name: "init.mt6897.usb.rc",
     src: "etc/init.mt6897.usb.rc",
-    sub_dir: "init/hw",
-    vendor: true,
-}
-
-prebuilt_etc {
-    name: "init.mtkgki.rc",
-    src: "etc/init.mtkgki.rc",
     sub_dir: "init/hw",
     vendor: true,
 }

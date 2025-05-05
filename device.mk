@@ -303,13 +303,11 @@ PRODUCT_PACKAGES += \
     init.batterysecret.rc \
     init.connectivity.rc \
     init.fingerprint.rc \
-    init.insmod.sh \
     init.mi_thermald.rc \
     init.modem.rc \
     init.mt6897.rc \
     init.mt6897.power.rc \
     init.mt6897.usb.rc \
-    init.mtkgki.rc \
     init.project.rc \
     init.sensor_2_0.rc \
     init.target.rc \

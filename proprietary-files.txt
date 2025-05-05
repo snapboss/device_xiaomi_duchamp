@@ -1441,6 +1441,11 @@ vendor/lib64/libDecoderProcessor.so
 vendor/lib64/libdolbyottcameracontrol.so
 vendor/lib64/libeglcore.so
 
+# Modules
+vendor/bin/init.insmod.sh
+vendor/etc/init.insmod.mt6897.cfg
+vendor/etc/init/hw/init.mtkgki.rc
+
 # Mtdservice
 odm/bin/mtd_mitee
 odm/etc/init/vendor.xiaomi.hardware.aidl.mtdservice-miteeservice.rc
