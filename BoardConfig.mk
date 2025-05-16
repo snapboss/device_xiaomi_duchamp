@@ -5,6 +5,7 @@
 #
 
 BUILD_BROKEN_DUP_RULES := true
+SELINUX_IGNORE_NEVERALLOWS := true
 
 # A/B
 AB_OTA_PARTITIONS := \
@@ -46,7 +47,7 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
     $(DEVICE_PATH)/framework_compatibility_matrix.xml \
     hardware/mediatek/vintf/mediatek_framework_compatibility_matrix.xml \
     hardware/xiaomi/vintf/xiaomi_framework_compatibility_matrix.xml \
-    vendor/lineage/config/device_framework_matrix.xml
+    vendor/aosp/config/device_framework_matrix.xml
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 DEVICE_MATRIX_FILE := $(DEVICE_PATH)/compatibility_matrix.xml
 
@@ -91,9 +92,6 @@ BOOT_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD) $(BO
 TARGET_KERNEL_CONFIG := duchamp
 TARGET_KERNEL_SOURCE := kernel/xiaomi/mt6897
 
-# Lineage Health
-TARGET_HEALTH_CHARGING_CONTROL_SUPPORTS_BYPASS := false
-
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
@@ -118,7 +116,7 @@ BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := erofs
 BOARD_VENDOR_DLKMIMAGE_FILE_SYSTEM_TYPE := erofs
 
 BOARD_PRODUCTIMAGE_MINIMAL_PARTITION_RESERVED_SIZE := false
--include vendor/lineage/config/BoardConfigReservedSize.mk
+-include vendor/aosp/config/BoardConfigReservedSize.mk
 
 TARGET_COPY_OUT_ODM := odm
 TARGET_COPY_OUT_ODM_DLKM := odm_dlkm
@@ -156,7 +154,7 @@ TARGET_USERIMAGES_USE_F2FS := true
 ENABLE_VENDOR_RIL_SERVICE := true
 
 # Security patch level
-BOOT_SECURITY_PATCH := 2024-12-01
+BOOT_SECURITY_PATCH := 2025-01-01
 VENDOR_SECURITY_PATCH := $(BOOT_SECURITY_PATCH)
 
 # SELinux

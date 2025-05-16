@@ -12,19 +12,22 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, device/xiaomi/duchamp/device.mk)
 
 # Inherit some common Lineage stuff.
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+$(call inherit-product, vendor/aosp/config/common_full_phone.mk)
 
-# To include Gapps 
-WITH_GMS := true
-WITH_GMS_COMMS_SUITE := true
-TARGET_SUPPORTS_WALLEFFECT := true
-TARGET_SUPPORTS_GOOGLE_RECORDER := true
-MATRIXX_BUILD_TYPE := Unofficial
-# Inherit some common device props
 TARGET_FACE_UNLOCK_SUPPORTED := true
-TARGET_HAS_UDFPS := true
+USE_PIXEL_CHARGER := true
+TARGET_SUPPORTS_NOW_PLAYING := true
+TARGET_SUPPORTS_PREBUILT_UPDATABLE_APEX := false
+TARGET_SUPPORTS_QUICK_TAP := false
+TARGET_SUPPORTS_GOOGLE_RECORDER := true
+TARGET_SUPPORTS_ADAPTIVE_CHARGING := true
+CUSTOM_BUILD_TYPE := UNOFFICIAL
+IS_SIGNED := true
+CUSTOM_MAINTAINER := Luxured
+TARGET_BOOT_ANIMATION_RES := 1080
+PRODUCT_NO_CAMERA := true
 
-PRODUCT_NAME := lineage_duchamp
+PRODUCT_NAME := aosp_duchamp
 PRODUCT_DEVICE := duchamp
 PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_BRAND := POCO

@@ -1,3 +1,0 @@
-# Increase max cached processes
-activity_manager.max_cached_processes=64
-
