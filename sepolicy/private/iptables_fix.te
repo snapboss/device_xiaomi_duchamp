@@ -1,0 +1,11 @@
+# Allow netd to use iptables (labeled as system_file) as an entrypoint
+allow netd system_file:file entrypoint;
+
+# Make sure netd has all the needed capabilities
+allow netd self:capability { net_admin net_raw };
+allow netd self:rawip_socket { create getopt setopt read write };
+allow netd self:netlink_route_socket { create read write getattr setopt bind };
+allow netd self:netlink_netfilter_socket { create getattr setopt bind };
+
+# Allow full permissions on system_file (which includes iptables)
+allow netd system_file:file { rx_file_perms execute execute_no_trans };

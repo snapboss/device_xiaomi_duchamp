@@ -1,3 +1,8 @@
 allow parts_app sysfs_therm:dir search;
 allow parts_app sysfs_therm:file { write };
 allow parts_app sysfs_therm:file { getattr open read };
+allow parts_app sysfs_power_supply:file rw_file_perms;
+allow parts_app sysfs_power_supply:dir search;
+allow parts_app sysfs_power_supply:file { write setattr };
+allow parts_app self:netlink_kobject_uevent_socket { bind create read setopt };;
+allow parts_app sysfs_devices_system_cpu:file rw_file_perms;
