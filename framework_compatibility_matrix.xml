@@ -1,11 +1,30 @@
 <compatibility-matrix version="5.0" type="framework">
     <hal format="hidl" optional="true">
         <name>android.hardware.media.c2</name>
+        <version>1.0-2</version>
+        <interface>
+            <name>IComponentStore</name>
+            <instance>software</instance>
+            <regex-instance>default[0-9]*</regex-instance>
+            <regex-instance>vendor[0-9]*_software</regex-instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>android.hardware.media.c2</name>
+        <version>1.0</version>
+        <interface>
+            <name>IConfigurable</name>
+            <instance>default</instance>
+            <instance>software</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>android.hardware.media.c2</name>
         <version>1.0</version>
         <interface>
             <name>IComponentStore</name>
-            <instance>default</instance>
             <instance>dolby</instance>
+            <instance>ozoaudio</instance>
         </interface>
     </hal>
     <hal format="hidl" optional="true">
@@ -14,6 +33,15 @@
         <interface>
             <name>IDms</name>
             <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.mediatek.hardware.engineermode</name>
+        <transport>hwbinder</transport>
+        <version>1.0-3</version>
+        <interface>
+            <name>IEmd</name>
+            <instance>EmHidlServer</instance>
         </interface>
     </hal>
 </compatibility-matrix>
