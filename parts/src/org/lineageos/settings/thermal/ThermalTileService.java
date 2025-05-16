@@ -55,6 +55,7 @@ public class ThermalTileService extends TileService {
         if (!mSharedPrefs.contains(THERMAL_ENABLED_KEY)) {
             mSharedPrefs.edit().putBoolean(THERMAL_ENABLED_KEY, false).apply();
         }
+        setupNotificationChannel();
     }
 
     @Override
@@ -124,30 +125,50 @@ public class ThermalTileService extends TileService {
         return 3; // Treat invalid or missing values as Unknown
     }
 
-    private void setThermalMode(int mode) {
-        int thermalValue;
-        switch (mode) {
-            case 0: thermalValue = 0; break;  // Default
-            case 1: thermalValue = 6; break;  // Performance
-            case 2: thermalValue = 19; break; // Gaming
-            case 3: thermalValue = 1; break;  // Battery Saver
-            default: thermalValue = 0; break; // Reset to Default for Unknown
-        }
-        boolean success = FileUtils.writeLine(THERMAL_SCONFIG, String.valueOf(thermalValue));
-        Log.d(TAG, "Thermal mode changed to " + modes[mode] + ": " + success);
+	private void setThermalMode(int mode) {
+	    int thermalValue;
+	    switch (mode) {
+        	case 0: thermalValue = 0; break;  // Default
+        	case 1: thermalValue = 6; break;  // Performance
+        	case 2: thermalValue = 19; break; // Gaming
+	        case 3: thermalValue = 1; break;  // Battery Saver
+	        default: thermalValue = 0; break; // Reset to Default for Unknown
+	    }
 
-            if (mode == 1) { // Performance mode
-                showPerformanceNotification();
-            } else {
-                cancelPerformanceNotification();
-            }
-      }
+	    boolean success = FileUtils.writeLine(THERMAL_SCONFIG, String.valueOf(thermalValue));
+	    Log.d(TAG, "Thermal mode changed to " + modes[mode] + ": " + success);
+
+	    // Adjust CPU governor based on mode
+	    if (mode == 0 || mode == 3) {
+	        // Set governor to 'conservative' for Default and Battery Saver modes
+	        FileUtils.writeLine("/sys/devices/system/cpu/cpu7/online", "0");
+	        FileUtils.writeLine("/sys/devices/system/cpu/cpufreq/policy0/scaling_governor", "conservative");
+	        FileUtils.writeLine("/sys/devices/system/cpu/cpufreq/policy4/scaling_governor", "conservative");
+	        FileUtils.writeLine("/sys/devices/system/cpu/cpufreq/policy7/scaling_governor", "conservative");
+	        Log.d(TAG, "Set CPU governor to 'conservative' for mode: " + modes[mode]);
+	    } else {
+	        // Set governor to 'schedutil' for all other modes
+	        FileUtils.writeLine("/sys/devices/system/cpu/cpu7/online", "1");
+	        FileUtils.writeLine("/sys/devices/system/cpu/cpufreq/policy0/scaling_governor", "schedutil");
+	        FileUtils.writeLine("/sys/devices/system/cpu/cpufreq/policy4/scaling_governor", "schedutil");
+	        FileUtils.writeLine("/sys/devices/system/cpu/cpufreq/policy7/scaling_governor", "schedutil");
+	        Log.d(TAG, "Set CPU governor to 'schedutil' for mode: " + modes[mode]);
+	    }
+
+	    // Show or cancel performance notification
+	    if (mode == 1) { // Performance mode
+	        showPerformanceNotification();
+	    } else {
+	        cancelPerformanceNotification();
+	    }
+	}
+
 
     private void updateTile() {
         Tile tile = getQsTile();
         if (tile != null) {
             // Set tile state based on current mode
-            if (currentMode == 1 || currentMode == 2) { // Performance or Gaming
+            if (currentMode == 1 || currentMode == 2 || currentMode == 3) { // Performance or Gaming
                 tile.setState(Tile.STATE_ACTIVE);
             } else {
                 tile.setState(Tile.STATE_INACTIVE);

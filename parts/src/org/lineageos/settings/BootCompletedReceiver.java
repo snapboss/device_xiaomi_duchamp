@@ -40,6 +40,7 @@ import org.lineageos.settings.thermal.ThermalUtils;
 import org.lineageos.settings.thermal.ThermalTileService;
 import org.lineageos.settings.refreshrate.RefreshUtils;
 import org.lineageos.settings.touchsampling.TouchSamplingUtils;
+import org.lineageos.settings.turbocharging.TurboChargingService;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
     private static final String TAG = "XiaomiParts";
@@ -99,6 +100,10 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
         // Start HTSR
         TouchSamplingUtils.restoreSamplingValue(context);
+
+        // Start TurboChargingService
+        Intent turboChargingIntent = new Intent(context, TurboChargingService.class);
+        context.startService(turboChargingIntent);
     }
 
     private void overrideHdrTypes(Context context) {
