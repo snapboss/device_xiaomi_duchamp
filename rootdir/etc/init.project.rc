@@ -115,7 +115,29 @@ on boot
     chmod 0664 /sys/class/mi_display/disp-DSI-0/brightness_clone
     chown system system /sys/class/mi_display/disp-DSI-0/factory_max_brightness
     chmod 0444 /sys/class/mi_display/disp-DSI-0/factory_max_brightness
-    
+
+    chown system system /sys/devices/platform/goodix_ts.0/double_tap_enable
+    chmod 0664 /sys/devices/platform/goodix_ts.0/double_tap_enable
+    write /sys/devices/platform/goodix_ts.0/double_tap_enable 1
+
+    chown system system /sys/devices/platform/goodix_ts.0/fod_enable
+    chmod 0664 /sys/devices/platform/goodix_ts.0/fod_enable
+
+    chown system system /sys/class/touch/touch_dev/fod_press_status
+    chmod 0664 /sys/class/touch/touch_dev/fod_press_status
+
+    chown system system /sys/devices/system/cpu/cpu7/online
+    chmod 0664 /sys/devices/system/cpu/cpu7/online
+
+    chown system system /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+
+    chown system system /sys/devices/system/cpu/cpufreq/policy4/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpufreq/policy4/scaling_governor
+
+    chown system system /sys/devices/system/cpu/cpufreq/policy7/scaling_governor
+    chmod 0664 /sys/devices/system/cpu/cpufreq/policy7/scaling_governor
+
     # camera flash led
     chown system system /sys/class/flashlight_core/flashlight/torchbrightness
     chmod 0664 /sys/class/flashlight_core/flashlight/torchbrightness

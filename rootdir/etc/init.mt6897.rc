@@ -685,7 +685,6 @@ on early-boot
 on boot
     write /proc/sys/vm/dirty_writeback_centisecs 300
     chmod 0660 /sys/power/autosleep
-
     chown system system /sys/devices/system/cpu/cpufreq/hotplug/cpu_num_base
     chmod 0660 /sys/devices/system/cpu/cpufreq/hotplug/cpu_num_base
     chown system system /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
@@ -925,9 +924,7 @@ service vendor.audio-hal /vendor/bin/hw/android.hardware.audio.service
 # TMP
 on property:sys.boot_completed=1
     exec_background -- /system/bin/settings put system min_refresh_rate 60
+    # Charge Bypass
+    chown system system /sys/class/power_supply/battery/input_suspend
+    chmod 0660 /sys/class/power_supply/battery/input_suspend
 
-# Hide Magisk
-on property:sys.boot_completed=1
-    # Restrict permissions to socket file
-    # to hide Magisk & co.
-    chmod 440 /proc/net/unix
