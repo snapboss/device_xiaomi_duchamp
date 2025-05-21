@@ -32,6 +32,16 @@
       "ResetOnInit": true
     },
     {
+      "Name": "FODEnable",
+      "Path": "/sys/devices/platform/goodix_ts.0/fod_enable",
+      "Values": [
+        "0",
+        "1"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": true
+    },
+    {
       "Name": "OnlineCPUFour",
       "Path": "/sys/devices/system/cpu/cpu4/online",
       "Values": [
@@ -254,6 +264,7 @@
                 "600000",
                 "480000"
             ],
+            "DefaultIndex": 18,
             "ResetOnInit": true
         },
         {
@@ -331,6 +342,7 @@
                 "500000",
                 "400000"
             ],
+            "DefaultIndex": 30,
             "ResetOnInit": true
         },
         {
@@ -582,19 +594,19 @@
     	  "PowerHint": "DISPLAY_INACTIVE",
     	  "Node": "CPULittleClusterMaxFreq",
     	  "Duration": 0,
-    	  "Value": "480000"
+    	  "Value": "700000"
    	 },
    	 {
     	  "PowerHint": "DISPLAY_INACTIVE",
-    	  "Node": "OnlineCPUFour",
+    	  "Node": "CPUMidClusterMinFreq",
     	  "Duration": 0,
-   	   "Value": "0"
+   	   "Value": "400000"
    	 },
    	 {
     	  "PowerHint": "DISPLAY_INACTIVE",
-    	  "Node": "OnlineCPUFive",
+    	  "Node": "CPUMidClusterMaxFreq",
     	  "Duration": 0,
-   	   "Value": "0"
+   	   "Value": "800000"
    	 },
    	 {
     	  "PowerHint": "DISPLAY_INACTIVE",
@@ -607,6 +619,12 @@
     	  "Node": "GpuPwrLevel",
     	  "Duration": 0,
     	  "Value": "64"
+    	},
+   	 {
+     	 "PowerHint": "DISPLAY_INACTIVE",
+    	  "Node": "FODEnable",
+    	  "Duration": 0,
+    	  "Value": "1"
     	},
    	 {
      	 "PowerHint": "DISPLAY_INACTIVE",
