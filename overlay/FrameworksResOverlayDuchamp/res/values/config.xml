@@ -660,4 +660,8 @@
     <!-- The max scale for the wallpaper when it's zoomed in -->
     <item name="config_wallpaperMaxScale" format="float" type="dimen">1.00</item>
 
+    <!-- TurboCharging -->
+    <bool name="config_hasTurboPowerCharger">true</bool>
+    <string name="config_oemFastChargerStatusPath" translatable="false">/sys/class/power_supply/bms/fastcharge_mode</string>
+
 </resources>
