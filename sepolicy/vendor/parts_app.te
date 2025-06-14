@@ -6,3 +6,7 @@ allow parts_app sysfs_power_supply:dir search;
 allow parts_app sysfs_power_supply:file { write setattr };
 allow parts_app self:netlink_kobject_uevent_socket { bind create read setopt };;
 allow parts_app sysfs_devices_system_cpu:file rw_file_perms;
+
+# Core Control
+allow parts_app vendor_sysfs_corecontrol:dir search;
+allow parts_app vendor_sysfs_corecontrol:file { getattr open read write };
