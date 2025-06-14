@@ -1,0 +1,2 @@
+allow system_suspend sysfs_batteryinfo:dir { read };
+

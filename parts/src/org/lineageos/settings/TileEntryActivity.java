@@ -33,7 +33,6 @@ public class TileEntryActivity extends Activity {
     private static final String TAG = "TileEntryActivity";
     private static final String THERMAL_TILE = "org.lineageos.settings.thermal.ThermalTileService";
     private static final String SATURATION_TILE = "org.lineageos.settings.saturation.SaturationTileService";
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
