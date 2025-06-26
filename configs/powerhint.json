@@ -1,20 +1,13 @@
 {
   "Nodes": [
     {
-      "Name": "MemFreq",
-      "Path": "/sys/devices/platform/soc/1c00f000.dvfsrc/mtk-dvfsrc-devfreq/devfreq/mtk-dvfsrc-devfreq/userspace/set_freq",
+      "Name": "MemFreqGovernor",
+      "Path": "/sys/class/devfreq/mtk-dvfsrc-devfreq/governor",
       "Values": [
-        "9999999999",
-        "8533000000",
-        "6400000000",
-        "5500000000",
-        "4100000000",
-        "3094000000",
-        "2133000000",
-        "1866000000",
-        "1600000000",
-        "800000000"
+        "simple_ondemand",
+        "performance"
       ],
+      "DefaultIndex": 0,
       "ResetOnInit": true,
       "Comments": [
         "It is userspace gov, powerhal will have exclusive and direct control of the freq"
@@ -171,6 +164,57 @@
         "[63] freq: 284000, volt: 48750, vsram: 75000, posdiv: 3, margin: 2500, power: 349",
         "[64] freq: 265000, volt: 48125, vsram: 75000, posdiv: 3, margin: 1875, power: 324"
       ]
+    },
+    {
+    "Name": "GpuMaxFreq",
+    "Path": "/sys/class/devfreq/13000000.mali/max_freq",
+    "Values": [
+      "1400000000",
+      "1367000000",
+      "1335000000",
+      "1303000000",
+      "1271000000",
+      "1238000000",
+      "1206000000",
+      "1174000000",
+      "1142000000",
+      "1110000000",
+      "1077000000",
+      "1045000000",
+      "1013000000",
+      "981000000",
+      "948000000",
+      "916000000",
+      "884000000",
+      "852000000",
+      "820000000",
+      "780000000",
+      "740000000",
+      "701000000",
+      "661000000",
+      "621000000",
+      "582000000",
+      "542000000",
+      "502000000",
+      "463000000",
+      "423000000",
+      "383000000",
+      "344000000",
+      "304000000",
+      "265000000"
+      ],
+     "DefaultIndex": 19,
+     "ResetOnInit": true
+    },
+    {
+      "Name": "GpuGovernor",
+      "Path": "/sys/class/devfreq/13000000.mali/governor",
+      "Values": [
+        "dummy",
+        "simple_ondemand"
+      ],
+      "DefaultIndex": 0,
+      "ResetOnInit": true
     },
     {
       "Name": "CPULittleClusterMaxFreq",
@@ -459,21 +503,9 @@
     },
     {
       "PowerHint": "LAUNCH",
-      "Node": "MemFreq",
-      "Duration": 2000,
-      "Value": "9999999999"
-    },
-    {
-      "PowerHint": "LAUNCH",
       "Node": "UclampTAMin",
       "Duration": 2000,
       "Value": "100"
-    },
-    {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "0"
     },
     {
       "PowerHint": "FIXED_PERFORMANCE",
@@ -518,40 +550,52 @@
       "Value": "100"
     },
     {
-      "PowerHint": "FIXED_PERFORMANCE",
-      "Node": "MemFreq",
-      "Duration": 0,
-      "Value": "9999999999"
+          "PowerHint": "FIXED_PERFORMANCE",
+    	  "Node": "GpuMaxFreq",
+    	  "Duration": 0,
+    	  "Value": "1400000000"
     },
     {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "PowerHALRenderingState",
-      "Duration": 0,
-      "Value": "EXPENSIVE_RENDERING"
+          "PowerHint": "EXPENSIVE_RENDERING",
+          "Node": "PowerHALRenderingState",
+          "Duration": 0,
+          "Value": "EXPENSIVE_RENDERING"
     },
     {
-      "PowerHint": "EXPENSIVE_RENDERING",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "0"
+     	 "PowerHint": "EXPENSIVE_RENDERING",
+    	  "Node": "MemFreqGovernor",
+    	  "Duration": 0,
+    	  "Value": "simple_ondemand"
     },
-   	 {
+    {
+     	 "PowerHint": "EXPENSIVE_RENDERING",
+    	  "Node": "GpuMaxFreq",
+    	  "Duration": 0,
+    	  "Value": "1400000000"
+    },
+    {
      	 "PowerHint": "DISPLAY_INACTIVE",
     	  "Node": "FODEnable",
     	  "Duration": 0,
     	  "Value": "1"
-      },
-    {
-      "PowerHint": "GAME",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "0"
     },
     {
-      "PowerHint": "GAME_LOADING",
-      "Node": "GpuPwrLevel",
-      "Duration": 0,
-      "Value": "0"
+     	 "PowerHint": "GAME",
+    	  "Node": "GpuMaxFreq",
+    	  "Duration": 0,
+    	  "Value": "1400000000"
+    },
+    {
+     	 "PowerHint": "GAME",
+    	  "Node": "GpuGovernor",
+    	  "Duration": 0,
+    	  "Value": "simple_ondemand"
+    },
+    {
+     	 "PowerHint": "GAME",
+    	  "Node": "MemFreqGovernor",
+    	  "Duration": 0,
+    	  "Value": "performance"
     },
     {
       "PowerHint": "ML_ACC",
