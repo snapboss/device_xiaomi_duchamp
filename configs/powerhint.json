@@ -15,7 +15,7 @@
     },
     {
       "Name": "FODEnable",
-      "Path": "/sys/devices/platform/goodix_ts.0/fod_enable",
+      "Path": "/sys/devices/platform/goodix_ts.0/goodix_ts_fod",
       "Values": [
         "0",
         "1"
