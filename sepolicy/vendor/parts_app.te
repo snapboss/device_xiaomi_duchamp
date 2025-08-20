@@ -23,3 +23,6 @@ allow parts_app property_socket:sock_file write;
 allow parts_app default_prop:file { read };
 allow parts_app sysfs:file { write };
 binder_call(parts_app, vendor_hal_displayfeature_xiaomi_default)
+
+# Allow XiaomiParts to read/write to sysfs_htsr;
+allow parts_app vendor_sysfs_htsr:file rw_file_perms;

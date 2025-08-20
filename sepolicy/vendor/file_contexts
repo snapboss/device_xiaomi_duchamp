@@ -104,9 +104,6 @@
 # Secure Element
 /(vendor|system/vendor)/bin/hw/vendor\.xiaomi\.hardware\.secure_element-service                        u:object_r:hal_secure_element_default_exec:s0
 
-# TouchFeature
-/(odm|vendor/odm|system/vendor)/bin/hw/vendor\.xiaomi\.hw\.touchfeature-service                        u:object_r:hal_touchfeature_xiaomi_default_exec:s0
-
 # Thermal
 /(vendor|system/vendor)/bin/mi_thermald                                                                u:object_r:vendor_mi_thermald_exec:s0
 /(vendor|system/vendor)/bin/hw/android\.hardware\.thermal-service\.pixel                               u:object_r:hal_thermal_default_exec:s0
@@ -122,8 +119,7 @@
 /data/vendor/mitee(/.*)?                                                                               u:object_r:mitee_data_file:s0
 
 # Touch Sampling
-/sys/devices/platform/goodix_ts.0/goodix_ts_report_rate                                                u:object_r:sysfs_htsr:s0
-/sys/devices/platform/goodix_ts.0(/.*)?                                                                u:object_r:sysfs:s0
+/sys/devices/platform/goodix_ts.0/goodix_ts_report_rate                                                u:object_r:vendor_sysfs_htsr:s0
 
 # Turbo Charge
 /sys/class/power_supply/battery/constant_charge_current                                                u:object_r:sysfs_power_supply:s0

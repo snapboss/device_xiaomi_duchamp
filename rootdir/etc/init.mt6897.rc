@@ -869,6 +869,11 @@ on boot
     # Power Manager
     write /sys/power/pm_freeze_timeout 2000
 
+
+    # Touch
+    chown system system /sys/devices/platform/goodix_ts.0/goodix_ts_report_rate
+    chmod 0664 /sys/devices/platform/goodix_ts.0/goodix_ts_report_rate
+
     # Touch feature
     chown system system /dev/xiaomi-touch
     chmod 0660 /dev/xiaomi-touch

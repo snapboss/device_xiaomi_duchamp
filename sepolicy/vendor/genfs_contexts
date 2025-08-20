@@ -80,3 +80,6 @@ genfscon sysfs /sys/devices/system/cpu/cpu7/online                       			    
 genfscon sysfs /sys/devices/system/cpu/cpufreq/policy0/scaling_governor                               u:object_r:parts_app:s0
 genfscon sysfs /sys/devices/system/cpu/cpufreq/policy4/scaling_governor                               u:object_r:parts_app:s0
 genfscon sysfs /sys/devices/system/cpu/cpufreq/policy7/scaling_governor                               u:object_r:parts_app:s0
+
+# Touch Sampling
+genfscon sysfs /devices/platform/goodix_ts.0/goodix_ts_report_rate                                               u:object_r:vendor_sysfs_htsr:s0

@@ -1,2 +1,2 @@
-type parts_app, domain;
+type parts_app, domain, sysfs_type;
 typeattribute parts_app mlstrustedsubject;

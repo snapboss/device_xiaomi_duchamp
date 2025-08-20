@@ -28,11 +28,14 @@ import androidx.annotation.Nullable;
 
 import org.lineageos.settings.thermal.ThermalSettingsActivity;
 import org.lineageos.settings.saturation.SaturationActivity;
+import org.lineageos.settings.touchsampling.TouchSamplingSettingsActivity;
 
 public class TileEntryActivity extends Activity {
     private static final String TAG = "TileEntryActivity";
     private static final String THERMAL_TILE = "org.lineageos.settings.thermal.ThermalTileService";
     private static final String SATURATION_TILE = "org.lineageos.settings.saturation.SaturationTileService";
+    private static final String HTSR_TILE = "org.lineageos.settings.touchsampling.TouchSamplingTileService";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,8 @@ public class TileEntryActivity extends Activity {
             intent = new Intent(this, ThermalSettingsActivity.class);
         } else if (SATURATION_TILE.equals(sourceClassName)) {
             intent = new Intent(this, SaturationActivity.class);
+        } else if (HTSR_TILE.equals(sourceClassName)) {
+            intent = new Intent(this, TouchSamplingSettingsActivity.class);
         } else {
             Log.e(TAG, "Unknown tile: " + sourceClassName);
             finish();
