@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-2024 Paranoid Android
+ * Copyright (C) 2023 Paranoid Android
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -7,8 +7,10 @@
 package org.lineageos.settings.display;
 
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.util.Log;
+
 import vendor.xiaomi.hardware.displayfeature_aidl.IDisplayFeature;
 
 public class DfWrapper {
@@ -17,25 +19,26 @@ public class DfWrapper {
 
     private static IDisplayFeature mDisplayFeature;
 
-    private static IBinder.DeathRecipient mDeathRecipient = new IBinder.DeathRecipient() {
-        @Override
-        public void binderDied() {
-            Log.d(TAG, "serviceDied");
-            mDisplayFeature = null;
-        }
+    private static final IBinder.DeathRecipient mDeathRecipient = () -> {
+        Log.d(TAG, "serviceDied");
+        mDisplayFeature = null;
     };
 
     public static IDisplayFeature getDisplayFeature() {
         if (mDisplayFeature == null) {
             Log.d(TAG, "getDisplayFeature: mDisplayFeature=null");
             try {
-                String name = "default";
-                String fqName = IDisplayFeature.DESCRIPTOR + "/" + name;
-                IBinder binder = android.os.Binder.allowBlocking(ServiceManager.waitForDeclaredService(fqName));
+                var name = "default";
+                var fqName = IDisplayFeature.DESCRIPTOR + "/" + name;
+                var binder = android.os.Binder.allowBlocking(ServiceManager.waitForDeclaredService(fqName));
                 mDisplayFeature = IDisplayFeature.Stub.asInterface(binder);
-                mDisplayFeature.asBinder().linkToDeath(mDeathRecipient, 0);
-            } catch (Exception e) {
-                Log.e(TAG, "getDisplayFeature failed!", e);
+
+                // Link to death
+                binder.linkToDeath(mDeathRecipient, 0);
+
+                Log.d(TAG, "Binded DisplayFeature");
+            } catch (Throwable t) {
+                Log.e(TAG, "getDisplayFeature failed!", t);
             }
         }
         return mDisplayFeature;
@@ -50,7 +53,7 @@ public class DfWrapper {
         Log.d(TAG, "setDisplayFeatureParams: " + params);
         try {
             displayFeature.setFeature(0, params.mode, params.value, params.cookie);
-        } catch (Exception e) {
+        } catch (RemoteException e) {
             Log.e(TAG, "setDisplayFeatureParams failed!", e);
         }
     }

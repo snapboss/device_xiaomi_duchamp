@@ -30,3 +30,5 @@ allow vendor_hal_displayfeature_default sysfs_therm:file w_file_perms;
 allow vendor_hal_displayfeature_default vendor_displayfeature_sysfs:file w_file_perms;
 
 set_prop(vendor_hal_displayfeature_default, vendor_displayfeature_prop)
+
+allow parts_app vendor_hal_displayfeature_default:binder { call transfer };
