@@ -329,6 +329,7 @@ ro.vendor.mediatek.version.release=alps-mp-u0.mp1.tc8sp1-V1
 vendor.powerhal.interaction.min=10
 vendor.powerhal.interaction.max=50
 vendor.powerhal.interaction.offset=0
+vendor.perf.framepacing.enable=1
 
 # Radio
 persist.radio.multisim.config=dsds
