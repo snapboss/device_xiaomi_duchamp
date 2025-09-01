@@ -94,6 +94,11 @@ vendor.mtk.camera.app.fd.video=1
 # Charging
 persist.vendor.accelerate.charge=true
 
+#Camera
+vendor.camera.aux.packagelist2=com.android.camera,com.android.systemui,com.facebook.orca
+vendor.camera.aux.packagelist3=com.snapchat.android,org.lineageos.snap,com.google.android.GoogleCamera
+vendor.camera.hal1.packagelist=com.zhiliaoapp.musically,com.whatsapp,com.instagram.android
+
 # Chipset
 ro.soc.manufacturer=Mediatek
 ro.soc.model=MT6897Z_A/ZA
