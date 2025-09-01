@@ -16,6 +16,7 @@
 
 package org.lineageos.settings.touchsampling;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,8 +26,10 @@ import android.provider.Settings;
 import android.util.Log;
 import androidx.preference.PreferenceManager;
 
+import org.lineageos.settings.touchsampling.TouchSamplingSettingsFragment;
 import org.lineageos.settings.utils.FileUtils;
 
+import java.util.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -37,11 +40,25 @@ import java.io.FileReader;
 public final class TouchSamplingUtils {
     private static final String TAG = "TouchSamplingUtils";
     public static final String HTSR_FILE = "/sys/devices/platform/goodix_ts.0/goodix_ts_report_rate";
+    public static final String SCONFIG_FILE = "/sys/class/thermal/thermal_message/sconfig";
 
     public static void restoreSamplingValue(Context context) {
         SharedPreferences sharedPref = context.getSharedPreferences(
                 TouchSamplingSettingsFragment.SHAREDHTSR, Context.MODE_PRIVATE);
         int htsrState = sharedPref.getInt(TouchSamplingSettingsFragment.SHAREDHTSR, 0);
         FileUtils.writeLine(HTSR_FILE, Integer.toString(htsrState));
+    }
+    /**
+     * Returns the package name of the current foreground app.
+     */
+    private static String getForegroundApp(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (am != null) {
+            List<ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+            if (tasks != null && !tasks.isEmpty() && tasks.get(0).topActivity != null) {
+                return tasks.get(0).topActivity.getPackageName();
+            }
+        }
+        return null;
     }
 }

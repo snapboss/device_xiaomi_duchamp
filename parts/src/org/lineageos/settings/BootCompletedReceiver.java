@@ -93,9 +93,15 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         // Start Pocket Mode Service
         PocketService.startService(context);
 
-        // Touch Sampling Tile Service
-        Intent touchSamplingTileServiceIntent = new Intent(context, TouchSamplingTileService.class);
-        context.startServiceAsUser(touchSamplingTileServiceIntent, UserHandle.CURRENT);
+        // Start Touch Sampling Tile Service
+        context.startServiceAsUser(new Intent(context, TouchSamplingTileService.class), UserHandle.CURRENT);
+
+        // Start TouchSamplingService to restore sampling rate
+        Intent touchSamplingServiceIntent = new Intent(context, TouchSamplingService.class);
+        context.startServiceAsUser(touchSamplingServiceIntent, UserHandle.CURRENT);
+
+        // Start Touch Sampling Service
+        context.startServiceAsUser(new Intent(context, TouchSamplingService.class), UserHandle.CURRENT);
 
         // Start TurboChargingService
         Intent turboChargingIntent = new Intent(context, TurboChargingService.class);

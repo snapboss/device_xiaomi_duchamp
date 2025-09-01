@@ -16,6 +16,9 @@
 
 package org.lineageos.settings.touchsampling;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,20 +30,23 @@ import android.view.MenuItem;
 import androidx.preference.Preference;
 import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceFragment;
-import androidx.preference.SwitchPreference;
+import androidx.preference.SwitchPreferenceCompat;
 
 import org.lineageos.settings.R;
 import org.lineageos.settings.touchsampling.TouchSamplingUtils;
 import org.lineageos.settings.utils.FileUtils;
 
-public class TouchSamplingSettingsFragment extends PreferenceFragment implements
-        Preference.OnPreferenceChangeListener {
+public class TouchSamplingSettingsFragment extends PreferenceFragment implements Preference.OnPreferenceChangeListener {
 
     private static final String HTSR_ENABLE_KEY = "htsr_enable";
     public static final String SHAREDHTSR = "SHAREDHTSR";
     public static final String HTSR_STATE = "htsr_state";
+    
+    // Added constants for notification
+    private static final int NOTIFICATION_ID = 3;
+    private static final String NOTIFICATION_CHANNEL_ID = "touch_sampling_tile_service_channel";
 
-    private SwitchPreference mHTSRPreference;
+    private SwitchPreferenceCompat mHTSRPreference;
     private SharedPreferences mPrefs;
 
     @Override
@@ -48,18 +54,30 @@ public class TouchSamplingSettingsFragment extends PreferenceFragment implements
         addPreferencesFromResource(R.xml.htsr_settings);
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mHTSRPreference = (SwitchPreference) findPreference(HTSR_ENABLE_KEY);
         mPrefs = getActivity().getSharedPreferences(SHAREDHTSR, Context.MODE_PRIVATE);
 
-        // Set the initial state of the switch
+        // Set the initial state of the main toggle
+        mHTSRPreference = (SwitchPreferenceCompat) findPreference(HTSR_ENABLE_KEY);
         boolean htsrEnabled = mPrefs.getBoolean(HTSR_STATE, false);
         mHTSRPreference.setChecked(htsrEnabled);
-
-        // Enable the switch and set its listener
         mHTSRPreference.setOnPreferenceChangeListener(this);
 
-        // Start the service if the toggle is enabled
-        if (htsrEnabled) {
+        // Setup the new auto-enable for selected apps toggle
+        SwitchPreferenceCompat autoEnableSelectedAppsPref = (SwitchPreferenceCompat) findPreference("htsr_auto_enable_selected_apps");
+        boolean autoEnableSelectedApps = mPrefs.getBoolean("htsr_auto_enable_selected_apps", true);
+        autoEnableSelectedAppsPref.setChecked(autoEnableSelectedApps);
+        autoEnableSelectedAppsPref.setOnPreferenceChangeListener(this);
+
+        // Wire up app selector/remover
+        Preference perAppConfigPref = findPreference("htsr_per_app_config");
+        if (perAppConfigPref != null) {
+            perAppConfigPref.setOnPreferenceClickListener(pref -> {
+                startActivity(new android.content.Intent(getContext(), TouchSamplingPerAppConfigActivity.class));
+                return true;
+            });
+        }
+        // Start service if main toggle or auto-enable for selected apps is ON
+        if (htsrEnabled || autoEnableSelectedApps) {
             startTouchSamplingService(true);
         }
     }
@@ -74,6 +92,13 @@ public class TouchSamplingSettingsFragment extends PreferenceFragment implements
 
             // Start or stop the service based on the toggle state
             startTouchSamplingService(isEnabled);
+            
+        } else if ("htsr_auto_enable_selected_apps".equals(preference.getKey())) {
+            boolean isAutoEnableSelectedApps = (Boolean) newValue;
+            mPrefs.edit().putBoolean("htsr_auto_enable_selected_apps", isAutoEnableSelectedApps).apply();
+            // Reapply the service state
+            boolean mainEnabled = mPrefs.getBoolean(HTSR_STATE, false);
+            startTouchSamplingService(mainEnabled || isAutoEnableSelectedApps);
         }
         return true;
     }
@@ -95,4 +120,5 @@ public class TouchSamplingSettingsFragment extends PreferenceFragment implements
         }
         return false;
     }
+
 }

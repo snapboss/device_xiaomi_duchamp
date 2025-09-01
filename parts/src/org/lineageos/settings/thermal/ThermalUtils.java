@@ -80,9 +80,6 @@ public final class ThermalUtils {
 
     private static final String THERMAL_SCONFIG = "/sys/class/thermal/thermal_message/sconfig";
 
-    private static final String GMAPS_PACKAGE = "com.google.android.apps.maps";
-    private static final String GMEET_PACKAGE = "com.google.android.apps.tachyon";
-
     private Context mContext;
     private Display mDisplay;
     private SharedPreferences mSharedPrefs;
@@ -238,10 +235,26 @@ public final class ThermalUtils {
 
     private int getDefaultStateForPackage(String packageName) {
         switch (packageName) {
-            case GMAPS_PACKAGE:
-                return STATE_NAVIGATION;
-            case GMEET_PACKAGE:
+            case "com.google.android.apps.tachyon":
                 return STATE_STREAMING;
+            case "com.google.android.youtube":
+            case "app.revanced.android.youtube":
+            case "org.telegram.messenger":
+            case "tw.nekomimi.nekogram":
+            case "com.google.android.apps.maps":
+            case "com.instagram.android":
+            case "com.zhiliaoapp.musically":
+            case "com.whatsapp":
+            case "com.facebook.katana":
+            case "com.facebook.orca":
+            case "com.twitter.android":
+            case "com.android.chrome":
+            case "com.google.android.dialer"
+                return STATE_DIALER;
+            case "com.antutu.ABenchMark":
+            case "com.antutu.benchmark.full":
+            case "com.primatelabs.geekbench6":
+                return STATE_BENCHMARK;
         }
 
         final PackageManager pm = mContext.getPackageManager();

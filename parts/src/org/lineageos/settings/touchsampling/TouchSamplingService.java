@@ -16,15 +16,23 @@
 
 package org.lineageos.settings.touchsampling;
 
+import android.app.ActivityManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.FileObserver;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 
+import org.lineageos.settings.R;
 import org.lineageos.settings.utils.FileUtils;
 
 public class TouchSamplingService extends Service {
@@ -32,11 +40,21 @@ public class TouchSamplingService extends Service {
 
     private BroadcastReceiver mScreenUnlockReceiver;
     private SharedPreferences.OnSharedPreferenceChangeListener mPreferenceChangeListener;
+    private FileObserver mSconfigObserver;
+    private Handler mAutoAppsHandler;
+    private Runnable mAutoAppsRunnable;
+    private NotificationManager mNotificationManager;
+    private static final int NOTIFICATION_ID = 3;
+    private static final String NOTIFICATION_CHANNEL_ID = "touch_sampling_tile_service_channel";
+    private boolean mLastEffectiveState = false;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "TouchSamplingService started");
+
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        setupNotificationChannel();
 
         // Initialize and register the broadcast receiver
         registerScreenUnlockReceiver();
@@ -45,7 +63,32 @@ public class TouchSamplingService extends Service {
         registerPreferenceChangeListener();
 
         // Apply the touch sampling rate initially
-        applyTouchSamplingRateFromPreferences();
+        updateEffectiveStateAndApply();
+
+        // Start a FileObserver to watch the sconfig file changes
+        mSconfigObserver = new FileObserver(TouchSamplingUtils.SCONFIG_FILE, FileObserver.MODIFY) {
+            @Override
+            public void onEvent(int event, String path) {
+                if ((event & FileObserver.MODIFY) != 0) {
+                    Log.d(TAG, "sconfig file modified. Reapplying touch sampling rate.");
+                    updateEffectiveStateAndApply();
+                }
+            }
+        };
+        mSconfigObserver.startWatching();
+
+        // Periodically check for auto-enabled apps with adaptive interval
+        mAutoAppsHandler = new Handler();
+        mAutoAppsRunnable = new Runnable() {
+            @Override
+            public void run() {
+                updateEffectiveStateAndApply();
+                // Use longer interval to reduce resource consumption
+                long interval = isScreenOn() ? 5000 : 15000; // 5s when screen on, 15s when off
+                mAutoAppsHandler.postDelayed(this, interval);
+            }
+        };
+        mAutoAppsHandler.post(mAutoAppsRunnable);
     }
 
     @Override
@@ -64,9 +107,16 @@ public class TouchSamplingService extends Service {
         }
 
         // Unregister the SharedPreferences change listener
-        SharedPreferences sharedPref = getSharedPreferences(
-                TouchSamplingSettingsFragment.SHAREDHTSR, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(TouchSamplingSettingsFragment.SHAREDHTSR, Context.MODE_PRIVATE);
         sharedPref.unregisterOnSharedPreferenceChangeListener(mPreferenceChangeListener);
+
+        // Stop watching sconfig file changes
+        if (mSconfigObserver != null) {
+            mSconfigObserver.stopWatching();
+        }
+        if (mAutoAppsHandler != null) {
+            mAutoAppsHandler.removeCallbacks(mAutoAppsRunnable);
+        }
     }
 
     @Override
@@ -84,7 +134,7 @@ public class TouchSamplingService extends Service {
                 if (Intent.ACTION_USER_PRESENT.equals(intent.getAction()) ||
                         Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
                     Log.d(TAG, "Screen turned on or device unlocked. Reapplying touch sampling rate.");
-                    applyTouchSamplingRateFromPreferences();
+                    updateEffectiveStateAndApply();
                 }
             }
         };
@@ -100,28 +150,34 @@ public class TouchSamplingService extends Service {
      * changes in the touch sampling rate setting.
      */
     private void registerPreferenceChangeListener() {
-        SharedPreferences sharedPref = getSharedPreferences(
-                TouchSamplingSettingsFragment.SHAREDHTSR, Context.MODE_PRIVATE);
-
+        SharedPreferences sharedPref = getSharedPreferences(TouchSamplingSettingsFragment.SHAREDHTSR, Context.MODE_PRIVATE);
         mPreferenceChangeListener = (sharedPreferences, key) -> {
-            if (TouchSamplingSettingsFragment.HTSR_STATE.equals(key)) {
-                Log.d(TAG, "Preference changed. Reapplying touch sampling rate.");
-                boolean htsrEnabled = sharedPreferences.getBoolean(key, false);
-                applyTouchSamplingRate(htsrEnabled ? 1 : 0);
+            if (TouchSamplingSettingsFragment.HTSR_STATE.equals(key)
+                    || "htsr_auto_enable_selected_apps".equals(key)) {
+                Log.d(TAG, "Preference changed (" + key + "). Reapplying touch sampling rate.");
+                updateEffectiveStateAndApply();
             }
         };
-
         sharedPref.registerOnSharedPreferenceChangeListener(mPreferenceChangeListener);
     }
 
     /**
      * Reads the touch sampling rate preference and applies the appropriate state.
      */
-    private void applyTouchSamplingRateFromPreferences() {
-        SharedPreferences sharedPref = getSharedPreferences(
-                TouchSamplingSettingsFragment.SHAREDHTSR, Context.MODE_PRIVATE);
-        boolean htsrEnabled = sharedPref.getBoolean(TouchSamplingSettingsFragment.HTSR_STATE, false);
-        applyTouchSamplingRate(htsrEnabled ? 1 : 0);
+    private void updateEffectiveStateAndApply() {
+        boolean effectiveState = getEffectiveTouchSamplingEnabled(this);
+        if (effectiveState != mLastEffectiveState) {
+            // State changed: update node and notification
+            applyTouchSamplingRate(effectiveState ? 1 : 0);
+            updateNotification(effectiveState);
+            mLastEffectiveState = effectiveState;
+        } else if (effectiveState) {
+            // State is ON, but may need to reapply node (e.g., after unlock/boot)
+            applyTouchSamplingRate(1);
+        } else {
+            // State is OFF, but may need to reapply node (e.g., after unlock/boot)
+            applyTouchSamplingRate(0);
+        }
     }
 
     /**
@@ -135,5 +191,98 @@ public class TouchSamplingService extends Service {
             Log.d(TAG, "Applying touch sampling rate: " + state);
             FileUtils.writeLine(TouchSamplingUtils.HTSR_FILE, Integer.toString(state));
         }
+    }
+
+    /**
+     * Checks if the foreground app is in the auto-enable list and applies HTSR accordingly.
+     */
+    private void applyTouchSamplingRateForAutoApps() {
+        SharedPreferences sharedPref = getSharedPreferences(TouchSamplingSettingsFragment.SHAREDHTSR, Context.MODE_PRIVATE);
+        boolean mainEnabled = sharedPref.getBoolean(TouchSamplingSettingsFragment.HTSR_STATE, false);
+        boolean autoEnableSelectedApps = sharedPref.getBoolean("htsr_auto_enable_selected_apps", true);
+        if (mainEnabled || !autoEnableSelectedApps) {
+            // Already handled by other logic or not enabled
+            return;
+        }
+        // Check auto apps
+        java.util.Set<String> autoApps = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this)
+                .getStringSet(org.lineageos.settings.touchsampling.TouchSamplingPerAppConfigFragment.PREF_AUTO_APPS, new java.util.HashSet<>());
+        String foreground = getForegroundApp(this);
+        int effectiveState = (autoApps.contains(foreground)) ? 1 : 0;
+        applyTouchSamplingRate(effectiveState);
+    }
+
+    /**
+     * Returns the package name of the current foreground app.
+     */
+    private static String getForegroundApp(Context context) {
+        android.app.ActivityManager am = (android.app.ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (am != null) {
+            java.util.List<android.app.ActivityManager.RunningTaskInfo> tasks = am.getRunningTasks(1);
+            if (tasks != null && !tasks.isEmpty() && tasks.get(0).topActivity != null) {
+                return tasks.get(0).topActivity.getPackageName();
+            }
+        }
+        return null;
+    }
+
+    private void updateNotification(boolean effectiveState) {
+        if (effectiveState) {
+            showTouchSamplingNotification();
+        } else {
+            cancelTouchSamplingNotification();
+        }
+    }
+
+    private boolean isScreenOn() {
+        try {
+            android.os.PowerManager powerManager = (android.os.PowerManager) getSystemService(Context.POWER_SERVICE);
+            return powerManager != null && powerManager.isInteractive();
+        } catch (Exception e) {
+            return true; // Default to screen on if we can't determine
+        }
+    }
+
+    private void setupNotificationChannel() {
+        NotificationChannel channel = new NotificationChannel(
+                NOTIFICATION_CHANNEL_ID,
+                getString(R.string.touch_sampling_mode_title),
+                NotificationManager.IMPORTANCE_DEFAULT
+        );
+        channel.setBlockable(true);
+        mNotificationManager.createNotificationChannel(channel);
+    }
+
+    private void showTouchSamplingNotification() {
+        Intent intent = new Intent(Intent.ACTION_POWER_USAGE_SUMMARY).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        Notification notification = new Notification.Builder(this, NOTIFICATION_CHANNEL_ID)
+                .setContentTitle(getString(R.string.touch_sampling_mode_title))
+                .setContentText(getString(R.string.touch_sampling_mode_notification))
+                .setSmallIcon(R.drawable.ic_touch_sampling_tile)
+                .setContentIntent(pendingIntent)
+                .setOngoing(true)
+                .setFlag(Notification.FLAG_NO_CLEAR, true)
+                .build();
+        mNotificationManager.notify(NOTIFICATION_ID, notification);
+    }
+
+    private void cancelTouchSamplingNotification() {
+        mNotificationManager.cancel(NOTIFICATION_ID);
+    }
+
+    public static boolean getEffectiveTouchSamplingEnabled(Context context) {
+        SharedPreferences sharedPref = context.getSharedPreferences(TouchSamplingSettingsFragment.SHAREDHTSR, Context.MODE_PRIVATE);
+        boolean mainEnabled = sharedPref.getBoolean(TouchSamplingSettingsFragment.HTSR_STATE, false);
+        boolean autoEnableSelectedApps = sharedPref.getBoolean("htsr_auto_enable_selected_apps", true);
+        if (mainEnabled) return true;
+        if (autoEnableSelectedApps) {
+            // Check auto apps
+            java.util.Set<String> autoApps = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context)
+                    .getStringSet(org.lineageos.settings.touchsampling.TouchSamplingPerAppConfigFragment.PREF_AUTO_APPS, new java.util.HashSet<>());
+            String foreground = getForegroundApp(context);
+            return autoApps.contains(foreground);
+        }
+        return false;
     }
 }

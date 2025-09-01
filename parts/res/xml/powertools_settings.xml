@@ -36,7 +36,7 @@
             android:title="@string/gpu_min_frequency"
             android:entries="@array/gpu_frequency_entries"
             android:entryValues="@array/gpu_frequency_values"
-            android:defaultValue="220000000"
+            android:defaultValue="265000000"
             android:summary="%s" />
 
         <ListPreference
@@ -44,7 +44,7 @@
             android:title="@string/gpu_max_frequency"
             android:entries="@array/gpu_frequency_entries"
             android:entryValues="@array/gpu_frequency_values"
-            android:defaultValue="680000000"
+            android:defaultValue="852000000"
             android:summary="%s" />
 
     </PreferenceCategory>
@@ -66,7 +66,7 @@
             android:title="Min Frequency"
             android:entries="@array/cpu_little_freq_entries"
             android:entryValues="@array/cpu_little_freq_values"
-            android:defaultValue="307200"
+            android:defaultValue="480000"
             android:summary="%s" />
 
         <ListPreference
@@ -74,7 +74,7 @@
             android:title="Max Frequency"
             android:entries="@array/cpu_little_freq_entries"
             android:entryValues="@array/cpu_little_freq_values"
-            android:defaultValue="2016000"
+            android:defaultValue="2200000"
             android:summary="%s" />
 
         <ListPreference
@@ -82,7 +82,7 @@
             android:title="Governor"
             android:entries="@array/cpu_governor_entries"
             android:entryValues="@array/cpu_governor_values"
-            android:defaultValue="walt"
+            android:defaultValue="schedutil"
             android:summary="%s" />
 
     </PreferenceCategory>
@@ -97,7 +97,7 @@
             android:title="Min Frequency"
             android:entries="@array/cpu_big_freq_entries"
             android:entryValues="@array/cpu_big_freq_values"
-            android:defaultValue="499200"
+            android:defaultValue="400000"
             android:summary="%s" />
 
         <ListPreference
@@ -105,7 +105,7 @@
             android:title="Max Frequency"
             android:entries="@array/cpu_big_freq_entries"
             android:entryValues="@array/cpu_big_freq_values"
-            android:defaultValue="2803200"
+            android:defaultValue="3200000"
             android:summary="%s" />
 
         <ListPreference
@@ -113,7 +113,7 @@
             android:title="Governor"
             android:entries="@array/cpu_governor_entries"
             android:entryValues="@array/cpu_governor_values"
-            android:defaultValue="walt"
+            android:defaultValue="schedutil"
             android:summary="%s" />
 
     </PreferenceCategory>
@@ -128,7 +128,7 @@
             android:title="Min Frequency"
             android:entries="@array/cpu_prime_freq_entries"
             android:entryValues="@array/cpu_prime_freq_values"
-            android:defaultValue="595200"
+            android:defaultValue="400000"
             android:summary="%s" />
 
         <ListPreference
@@ -136,7 +136,7 @@
             android:title="Max Frequency"
             android:entries="@array/cpu_prime_freq_entries"
             android:entryValues="@array/cpu_prime_freq_values"
-            android:defaultValue="3187200"
+            android:defaultValue="3200000"
             android:summary="%s" />
 
         <ListPreference
@@ -144,7 +144,7 @@
             android:title="Governor"
             android:entries="@array/cpu_governor_entries"
             android:entryValues="@array/cpu_governor_values"
-            android:defaultValue="walt"
+            android:defaultValue="schedutil"
             android:summary="%s" />
 
     </PreferenceCategory>

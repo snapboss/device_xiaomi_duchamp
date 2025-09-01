@@ -80,12 +80,16 @@
     <string name="image_preview_previous_page_content_description">Previous</string>
 
     <!-- High Touch Polling -->
-    <string name="htsr_title">Enhanced Touch Responsiveness</string>
-    <string name="htsr_enable_title">High Touch Polling Rate</string>
+    <string name="htsr_title">High Touch Polling Rate</string>
+    <string name="htsr_enable_title">Enhanced Touch Responsiveness</string>
     <string name="htsr_enable_summary">Increases touch polling rate to decrease touch input latency for a smoother experience</string>
     <string name="touch_sampling_mode_title">High Touch Polling Mode</string>
     <string name="touch_sampling_mode_notification">High Touch Polling Rate is now active. This reduces touch input latency but may increase battery consumption</string>
     <string name="touch_sampling_tile_label">Touch Boost</string>
+    <string name="htsr_app_added">%1$s added to auto-enable list.</string>
+    <string name="htsr_app_removed">%1$s removed from auto-enable list.</string>
+    <string name="htsr_app_selector_activity_title">Select Apps for High Touch Polling</string>
+    <string name="htsr_app_remover_activity_title">Remove Auto-Enable Apps</string>
 
     <!-- Turbo Charging -->
     <string name="turbo_charge_title">Turbo Charging</string>
@@ -121,7 +125,7 @@
     <string name="powerprofile_tile_disabled_subtitle">Disabled (Per-app thermal profiles enabled)</string>
     <string name="gaming_mode_title">Game Boost</string>
     <string name="gaming_mode_notification">Game Mode is now activated for optimal gaming performance.</string>
-    <string name="power_profile_footer_summary">Note: Higher frequencies (e.g., GPU over 900MHz and prime core higher clock) are available only in Game Boost mode.</string>
+    <string name="power_profile_footer_summary">Note: This will not override your thermal configs. CPU and GPU will still retain the thermal throttling config used in ROM.</string>
 
     <!-- Powertools Main Title -->
     <string name="Powertools_title">Powertools</string>
