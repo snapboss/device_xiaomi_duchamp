@@ -55,6 +55,7 @@ on post-fs-data
     mkdir /data/vendor/thermal 0771 root system
     mkdir /data/vendor/thermal/config 0771 root system
     chown system system /sys/class/thermal/thermal_message/sconfig
+    chmod 0664 /sys/class/thermal/thermal_message/sconfig
     chown system system /sys/class/thermal/thermal_message/market_download_limit
     chown system system /sys/class/thermal/thermal_message/boost
     chown system system /sys/class/thermal/thermal_message/temp_state
@@ -92,9 +93,6 @@ on property:vendor.audio.cit.spkcal.copy=true
 on property:sys.spatial.headtrack=*
     setprop vendor.spatial.headtrack ${sys.spatial.headtrack}
 
-    # Set thermal mode to default
-    write /sys/devices/virtual/thermal/thermal_message/sconfig 0
-
 on boot
     # Display feature sysfs node
     chown system system /sys/class/mi_display/disp-DSI-0/disp_param
@@ -115,6 +113,10 @@ on boot
     chmod 0664 /sys/class/mi_display/disp-DSI-0/brightness_clone
     chown system system /sys/class/mi_display/disp-DSI-0/factory_max_brightness
     chmod 0444 /sys/class/mi_display/disp-DSI-0/factory_max_brightness
+
+    # Touch
+    chown system system /sys/devices/platform/goodix_ts.0/goodix_ts_report_rate
+    chmod 0664 /sys/devices/platform/goodix_ts.0/goodix_ts_report_rate
 
     chown system system /sys/devices/platform/goodix_ts.0/double_tap_enable
     chmod 0664 /sys/devices/platform/goodix_ts.0/double_tap_enable
