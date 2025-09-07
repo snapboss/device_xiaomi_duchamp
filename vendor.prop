@@ -20,10 +20,6 @@ AUDIO_CAMERA_GAIN=true
 AUDIO_FEATURE_REVERSE_MIC_DIRECTION_SUPPORT=true
 AUDIO_FEATURE_SEPARATE_RCV_SPK_CALL_TX=true
 
-# Audio (Dolby)
-ro.vendor.audio.device.db=DB_XM
-ro.vendor.audio.device.dbcom=dolby_common
-
 # APK Verity
 ro.apk_verity.mode=2
 
