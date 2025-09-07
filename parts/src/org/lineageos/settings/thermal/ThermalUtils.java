@@ -249,7 +249,7 @@ public final class ThermalUtils {
             case "com.facebook.orca":
             case "com.twitter.android":
             case "com.android.chrome":
-            case "com.google.android.dialer"
+            case "com.google.android.dialer":
                 return STATE_DIALER;
             case "com.antutu.ABenchMark":
             case "com.antutu.benchmark.full":
@@ -276,8 +276,6 @@ public final class ThermalUtils {
 
         if (AppUtils.isBrowserApp(mContext, packageName, UserHandle.myUserId())) {
             return STATE_BROWSER;
-        } else if (DefaultDialerManager.getDefaultDialerApplication(mContext).equals(packageName)) {
-            return STATE_DIALER;
         } else if (isCameraApp(packageName)) {
             return STATE_CAMERA;
         } else {
