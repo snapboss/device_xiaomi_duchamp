@@ -24,20 +24,20 @@ import android.content.SharedPreferences;
 
 public class PowertoolBootReceiver extends BroadcastReceiver {
 
-    private static final String GPU_DEFAULT_MIN = "220000000";
-    private static final String GPU_DEFAULT_MAX = "680000000";
+    private static final String GPU_DEFAULT_MIN = "265000000";
+    private static final String GPU_DEFAULT_MAX = "1110000000";
 
-    private static final String CPU_LITTLE_DEFAULT_MIN = "307200";
-    private static final String CPU_LITTLE_DEFAULT_MAX = "2016000";
-    private static final String CPU_LITTLE_DEFAULT_GOV = "walt";
+    private static final String CPU_LITTLE_DEFAULT_MIN = "480000";
+    private static final String CPU_LITTLE_DEFAULT_MAX = "1800000";
+    private static final String CPU_LITTLE_DEFAULT_GOV = "schedutil";
 
-    private static final String CPU_BIG_DEFAULT_MIN = "499200";
-    private static final String CPU_BIG_DEFAULT_MAX = "2803200";
-    private static final String CPU_BIG_DEFAULT_GOV = "walt";
+    private static final String CPU_BIG_DEFAULT_MIN = "400000";
+    private static final String CPU_BIG_DEFAULT_MAX = "2500000";
+    private static final String CPU_BIG_DEFAULT_GOV = "schedutil";
 
-    private static final String CPU_PRIME_DEFAULT_MIN = "595200";
-    private static final String CPU_PRIME_DEFAULT_MAX = "3187200";
-    private static final String CPU_PRIME_DEFAULT_GOV = "walt";
+    private static final String CPU_PRIME_DEFAULT_MIN = "400000";
+    private static final String CPU_PRIME_DEFAULT_MAX = "2500000";
+    private static final String CPU_PRIME_DEFAULT_GOV = "schedutil";
 
     @Override
     public void onReceive(Context context, Intent intent) {
