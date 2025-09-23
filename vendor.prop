@@ -20,9 +20,6 @@ AUDIO_CAMERA_GAIN=true
 AUDIO_FEATURE_REVERSE_MIC_DIRECTION_SUPPORT=true
 AUDIO_FEATURE_SEPARATE_RCV_SPK_CALL_TX=true
 
-# APK Verity
-ro.apk_verity.mode=2
-
 # Bluetooth
 bluetooth.device_id.vendor_id=0x0046
 bluetooth.device.class_of_device=90,2,12
