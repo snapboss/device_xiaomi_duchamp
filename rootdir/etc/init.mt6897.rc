@@ -663,6 +663,9 @@ on post-fs-data
     chmod 0666 /dev/xlog
     # END Audio_DataWhale
 
+    # default country code
+    setprop ro.boot.wificountrycode 00
+
 on early-boot
     chown root log /proc/ccci_sib
     chown root system /proc/ccci_dump
