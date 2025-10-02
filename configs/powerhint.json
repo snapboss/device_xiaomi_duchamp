@@ -173,6 +173,18 @@
       ]
     },
     {
+      "Name": "GPUBlockBoost",
+      "Path": "/sys/kernel/ged/hal/gpu_boost_level",
+      "Values": [
+        "101",
+        "50",
+        "0",
+        "-1"
+      ],
+      "ResetOnInit": true,
+      "DefaultIndex": 2
+    },
+    {
     "Name": "GpuMaxFreq",
     "Path": "/sys/class/devfreq/13000000.mali/max_freq",
     "Values": [
@@ -210,7 +222,7 @@
       "304000000",
       "265000000"
       ],
-     "DefaultIndex": 0,
+     "DefaultIndex": 18,
      "ResetOnInit": true
     },
     {
@@ -487,6 +499,12 @@
       "Value": "1300000"
     },
     {
+      "PowerHint": "INTERACTION",
+      "Node": "GPUBlockBoost",
+      "Duration": 2000,
+      "Value": "50"
+    },
+    {
       "PowerHint": "LAUNCH",
       "Node": "CPUMidClusterMinFreq",
       "Duration": 2000,
@@ -509,6 +527,12 @@
       "Node": "GpuMaxFreq",
       "Duration": 2000,
       "Value": "852000000"
+    },
+    {
+      "PowerHint": "LAUNCH",
+      "Node": "GPUBlockBoost",
+      "Duration": 2000,
+      "Value": "101"
     },
    {
       "PowerHint": "FIXED_PERFORMANCE",
@@ -553,6 +577,12 @@
       "Value": "1400000000"
     },
     {
+      "PowerHint": "FIXED_PERFORMANCE",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "101"
+    },
+    {
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "PowerHALRenderingState",
       "Duration": 0,
@@ -563,6 +593,12 @@
       "Node": "GpuMaxFreq",
       "Duration": 0,
       "Value": "1400000000"
+    },
+    {
+      "PowerHint": "EXPENSIVE_RENDERING",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "50"
     },
     {
       "PowerHint": "DISPLAY_INACTIVE",
@@ -589,6 +625,12 @@
       "Value": "2800000"
     },
     {
+      "PowerHint": "SUSTAINED_PERFORMANCE",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "50"
+    },
+    {
       "PowerHint": "GAME",
       "Node": "CPULittleClusterMaxFreq",
       "Duration": 0,
@@ -611,6 +653,12 @@
       "Node": "GpuMaxFreq",
       "Duration": 0,
       "Value": "1400000000"
+    },
+    {
+      "PowerHint": "GAME",
+      "Node": "GPUBlockBoost",
+      "Duration": 0,
+      "Value": "101"
     },
     {
       "PowerHint": "GAME_LOADING",
