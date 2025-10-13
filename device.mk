@@ -381,9 +381,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vibratorfeature-wrapper
 
-# Virtualization service
-$(call inherit-product, packages/modules/Virtualization/apex/product_packages.mk)
-
 # Wi-Fi
 PRODUCT_PACKAGES += \
     android.hardware.wifi-service \
