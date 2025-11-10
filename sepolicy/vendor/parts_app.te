@@ -19,7 +19,6 @@ allow parts_app sysfs_therm:file { getattr open read };
 # extra
 
 allow parts_app vendor_hal_displayfeature_service:service_manager find;
-allow parts_app property_socket:sock_file write;
 allow parts_app default_prop:file { read };
 allow parts_app sysfs:file { write };
 binder_call(parts_app, vendor_hal_displayfeature_xiaomi_default)
@@ -35,3 +34,8 @@ allow parts_app hal_touchfeature_xiaomi_service:service_manager find;
 binder_call(parts_app, hal_touchfeature_xiaomi_service)
 binder_call(parts_app, hal_touchfeature_xiaomi_default)
 allow parts_app default_android_service:service_manager find;
+
+
+allow parts_app property_socket:sock_file { read write execute getattr };
+allow parts_app init:unix_stream_socket connectto;
+allow parts_app exported3_system_prop:property_service set;

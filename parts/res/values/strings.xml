@@ -50,7 +50,7 @@
     <string name="thermal_tile_disabled_subtitle">Disabled (Per-app thermal profiles enabled)</string>
     <string name="perf_mode_title">High Performance Mode</string>
     <string name="perf_mode_notification">High Performance Mode is now activated for enhanced performance.</string>
-
+    
     <!-- Refresh rate -->
     <string name="refresh_title">Per-App Refresh rate</string>
     <string name="refresh_summary">Set the maximum refresh rate for a specific application</string>

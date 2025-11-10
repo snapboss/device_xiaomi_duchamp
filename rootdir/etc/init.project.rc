@@ -66,6 +66,8 @@ on post-fs-data
     chown system system /sys/class/thermal/thermal_message/charger_temp
     chown system system /sys/class/power_supply/battery/constant_charge_current
     chmod 0664 /sys/class/power_supply/battery/constant_charge_current
+    chown system system /sys/class/power_supply/bms/shutdown_voltage
+    chmod 0664 /sys/class/power_supply/bms/shutdown_voltage
 
     # Power
     chown root system /sys/devices/system/cpu/sched_ctl/sched_util_est_ctrl
@@ -106,16 +108,11 @@ on boot
     chown system system /sys/class/mi_display/disp-DSI-0/factory_max_brightness
     chmod 0444 /sys/class/mi_display/disp-DSI-0/factory_max_brightness
 
-    # Touch
-    chown system system /sys/devices/platform/goodix_ts.0/goodix_ts_report_rate
-    chmod 0664 /sys/devices/platform/goodix_ts.0/goodix_ts_report_rate
+    chown system system /sys/devices/platform/goodix_ts.0/goodix_ts_double_tap
+    chmod 0664 /sys/devices/platform/goodix_ts.0/goodix_ts_double_tap
 
-    chown system system /sys/devices/platform/goodix_ts.0/double_tap_enable
-    chmod 0664 /sys/devices/platform/goodix_ts.0/double_tap_enable
-    write /sys/devices/platform/goodix_ts.0/double_tap_enable 1
-
-    chown system system /sys/devices/platform/goodix_ts.0/fod_enable
-    chmod 0664 /sys/devices/platform/goodix_ts.0/fod_enable
+    chown system system /sys/devices/platform/goodix_ts.0/goodix_ts_fod
+    chmod 0664 /sys/devices/platform/goodix_ts.0/goodix_ts_fod
 
     chown system system /sys/class/touch/touch_dev/fod_press_status
     chmod 0664 /sys/class/touch/touch_dev/fod_press_status

@@ -86,3 +86,13 @@ genfscon sysfs /devices/platform/goodix_ts.0/goodix_ts_report_rate              
 # Vibrator
 genfscon sysfs /devices/platform/11d00000.i2c/i2c-0/0-005a                         u:object_r:sysfs_vibrator:s0
 genfscon sysfs /devices/platform/11d00000.i2c/i2c-0/0-006b                         u:object_r:sysfs_vibrator:s0
+
+#genfscon proc /sys/vm/dirty_writeback_centisecs     u:object_r:proc_dirty:s0
+#genfscon proc /sys/vm/vfs_cache_pressure            u:object_r:proc_drop_caches:s0
+#genfscon proc /sys/vm/dirty_ratio                   u:object_r:proc_dirty:s0
+#genfscon proc /sys/kernel/sched_migration_cost_ns   u:object_r:proc_sched:s0
+#genfscon proc /sys/kernel/sched_pelt_multiplier     u:object_r:proc_sched:s0
+
+# Gpu Boost
+genfscon sysfs /sys/class/devfreq/13000000.mali/available_frequencies                   u:object_r:sysfs_gpu:s0
+genfscon sysfs /sys/class/devfreq/13000000.mali/min_freq                   u:object_r:sysfs_gpu:s0
