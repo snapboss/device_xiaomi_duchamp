@@ -88,11 +88,6 @@ vendor.mtk.camera.app.fd.video=1
 # Charging
 persist.vendor.accelerate.charge=true
 
-#Camera
-vendor.camera.aux.packagelist2=com.android.camera,com.android.systemui,com.facebook.orca
-vendor.camera.aux.packagelist3=com.snapchat.android,org.lineageos.snap,com.google.android.GoogleCamera
-vendor.camera.hal1.packagelist=com.zhiliaoapp.musically,com.whatsapp,com.instagram.android
-
 # Chipset
 ro.soc.manufacturer=Mediatek
 ro.soc.model=MT6897Z_A/ZA
@@ -117,19 +112,7 @@ dalvik.vm.dex2oat64.enabled=true
 # Display
 debug.graphics.game_default_frame_rate.disabled=true
 debug.mediatek.appgamepq_compress=1
-debug.sf.auto_latch_unsignaled=0
-debug.sf.early.app.duration=16600000
-debug.sf.early.sf.duration=16600000
-debug.sf.earlyGl.app.duration=16600000
-debug.sf.earlyGl.sf.duration=16600000
-debug.sf.enable_gl_backpressure=1
-debug.sf.enable_hwc_vds=0
-debug.sf.frame_rate_multiple_threshold=120
-debug.sf.late.app.duration=16600000
-debug.sf.late.sf.duration=10500000
-debug.sf.use_phase_offsets_as_durations=1
 persist.sys.sf.native_mode=258
-debug.sf.predict_hwc_composition_strategy=0
 persist.vendor.sys.pq.disp.gamma.silky.brightness=1
 persist.vendor.sys.pq.disp_gamma_silky_brightness_by_hwc=1
 persist.vendor.sys.pq.mtk_disp_clarity_support=0
@@ -138,18 +121,6 @@ ro.hardware.gralloc=common
 ro.hardware.hwcomposer=mtk_common
 ro.hardware.vulkan=mali
 ro.opengles.version=196610
-ro.surface_flinger.force_hwc_copy_for_virtual_displays=true
-ro.surface_flinger.game_default_frame_rate_override=60
-ro.surface_flinger.has_wide_color_display=true
-ro.surface_flinger.has_HDR_display=true
-ro.surface_flinger.ignore_hdr_camera_layers=true
-ro.surface_flinger.max_frame_buffer_acquired_buffers=4
-ro.surface_flinger.primary_display_orientation=ORIENTATION_0
-ro.surface_flinger.protected_contents=true
-ro.surface_flinger.set_display_power_timer_ms=1000
-ro.surface_flinger.set_idle_timer_ms=4000
-ro.surface_flinger.set_touch_timer_ms=4000
-ro.surface_flinger.use_content_detection_for_refresh_rate=true
 ro.vendor.composer_version=3.2
 ro.vendor.mml.mtk_mml_support=1
 ro.vendor.mtk.gpud.mm.fbc.disable=false
@@ -196,7 +167,7 @@ ro.vendor.pq.mtk_pq_video_whitelist_support=0
 ro.vendor.pq.mtk_scltm_support=1
 ro.vendor.pq.mtk_silky_brigtness_support=2
 ro.vendor.pq.mtk_ultra_dimming_support=0
-ro.vendor.pq.mtk_ultra_resolution_support=1
+ro.vendor.pq.mtk_ultra_resolution_support=0
 ro.vendor.pq.mtk_video_transition=0
 ro.launcher.blur.appLaunch=0
 
@@ -323,12 +294,6 @@ ro.vendor.mtk_nn_support=1
 ro.vendor.mediatek.platform=MT6897
 ro.vendor.mediatek.version.release=alps-mp-u0.mp1.tc8sp1-V1
 
-# Power
-vendor.powerhal.interaction.min=10
-vendor.powerhal.interaction.max=50
-vendor.powerhal.interaction.offset=0
-vendor.perf.framepacing.enable=1
-
 # Radio
 persist.radio.multisim.config=dsds
 persist.vendor.md_c2k_cap_dep_check=0
@@ -382,6 +347,39 @@ persist.vendor.sensor.maxbrightness=8191
 persist.vendor.sensor.powbrightness=400
 ro.vendor.mtk.sensor.support=yes
 ro.vendor.sensors.xiaomi.udfps=true
+
+# SurfaceFlinger
+debug.sf.early.app.duration=16600000
+debug.sf.early.sf.duration=16600000
+debug.sf.earlyGl.app.duration=16600000
+debug.sf.earlyGl.sf.duration=16600000
+debug.sf.enable_gl_backpressure=1
+debug.sf.disable_backpressure=0
+debug.sf.enable_hwc_vds=0
+debug.sf.frame_rate_multiple_threshold=120
+debug.sf.late.app.duration=16600000
+debug.sf.late.sf.duration=10500000
+debug.sf.hwc.min.duration=8400000
+debug.sf.predict_hwc_composition_strategy=0
+debug.sf.treat_170m_as_sRGB=1
+debug.sf.use_phase_offsets_as_durations=1
+ro.surface_flinger.enable_frame_rate_override=false
+ro.surface_flinger.force_hwc_copy_for_virtual_displays=true
+ro.surface_flinger.has_wide_color_display=true
+ro.surface_flinger.ignore_hdr_camera_layers=true
+ro.surface_flinger.max_frame_buffer_acquired_buffers=3
+ro.surface_flinger.primary_display_orientation=ORIENTATION_0
+ro.surface_flinger.protected_contents=true
+ro.surface_flinger.set_display_power_timer_ms=1000
+ro.surface_flinger.set_idle_timer_ms?=4000
+ro.surface_flinger.set_touch_timer_ms=4000
+ro.surface_flinger.supports_background_blur=1
+ro.surface_flinger.uclamp.min=120
+ro.surface_flinger.use_content_detection_for_refresh_rate?=false
+ro.surface_flinger.has_HDR_display=true
+ro.surface_flinger.use_color_management=true
+persist.sys.sf.color_saturation=1.1
+debug.sf.disable_client_composition_cache=1
 
 # Trusted Execution Environment (TEE)
 ro.vendor.mtk_microtrust_tee_support=1
