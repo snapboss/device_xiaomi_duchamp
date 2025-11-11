@@ -157,4 +157,25 @@ public final class FileUtils {
         }
         return ok;
     }
+
+    public static void writeLine(String fileName, int value) {
+        writeLine(fileName, Integer.toString(value));
+    }
+
+    /**
+     * Reads the first line of a file and returns it as an int (strips "0x" if present).
+     *
+     * @return the parsed int value, or 0 if conversion fails
+     */
+    public static int readLineInt(String fileName) {
+        try {
+            String line = readOneLine(fileName);
+            if (line != null) {
+                return Integer.parseInt(line.replace("0x", ""));
+            }
+        } catch (NumberFormatException e) {
+            Log.e(TAG, "Could not convert string to int from file " + fileName, e);
+        }
+        return 0;
+    }
 }
