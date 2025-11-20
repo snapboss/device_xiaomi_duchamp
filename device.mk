@@ -389,6 +389,8 @@ PRODUCT_PACKAGES += \
     libwifi-hal-wrapper \
     wpa_supplicant
 
+$(call soong_config_set,wpa_supplicant_8,wifi_disable_multi_akm,true)
+
 # Include the keys.mk file
 -include vendor/lineage-priv/keys/keys.mk
 
