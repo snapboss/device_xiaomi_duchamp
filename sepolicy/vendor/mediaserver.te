@@ -1,2 +1,0 @@
-allow mediaserver vendor_default_prop:file r_file_perms;
-get_prop(mediaserver, vendor_default_prop)

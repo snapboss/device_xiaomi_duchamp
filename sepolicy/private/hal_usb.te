@@ -1,1 +1,0 @@
-allow hal_usb sysfs_udc:dir search;
