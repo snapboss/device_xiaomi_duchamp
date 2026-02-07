@@ -263,6 +263,7 @@ ro.vendor.mediatek.platform=MT6897
 ro.vendor.mediatek.version.release=alps-mp-u0.mp1.tc8sp1-V1
 
 # Radio
+persist.radio.VT_CAM_INTERFACE=2
 persist.radio.multisim.config=dsds
 persist.vendor.md_c2k_cap_dep_check=0
 persist.vendor.mims_support=2
